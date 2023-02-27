@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<cwd_glossary name="DB_Design" description="generated from logical model of design DB_Design" id="08CF8385-1A72-2D4E-AC21-EDDECE636971" incomplete_modifiers="true" >
+
+   <glossaryWord name="Beheerder" plural="Beheerders" abbreviation="" alt_abbreviation="" id="14BE3049-03D4-BB1F-AF07-D091CC2A0DAF" import_id="" description="" />
+   <glossaryWord name="Gemeente" plural="Gemeentes" abbreviation="" alt_abbreviation="" id="6EAB2F8B-B163-6594-F751-A55C21BD53EF" import_id="" description="" />
+   <glossaryWord name="Klas" plural="Klassen" abbreviation="" alt_abbreviation="" id="3B9281F8-3E5F-232B-4927-636165FA2883" import_id="" description="" />
+   <glossaryWord name="Leerling" plural="Leerlingen" abbreviation="" alt_abbreviation="" id="9EA8BF04-2527-4AAC-24B0-64D45C10EDE2" import_id="" description="" />
+   <glossaryWord name="PK" plural="PKs" abbreviation="" alt_abbreviation="" id="ED2A8F21-7975-AAF8-3704-89BCA0D0798D" import_id="" description="" />
+   <glossaryWord name="School" plural="Scholen" abbreviation="" alt_abbreviation="" id="90C79143-8390-69D8-C3B9-D58E426E4DEF" import_id="" description="" />
+   <glossaryWord name="SchoolBeheerder" plural="SchoolBeheerders" abbreviation="" alt_abbreviation="" id="3C38BD64-26A7-BB44-5095-2AA49B301938" import_id="" description="" />
+   <glossaryWord name="SchoolBeheerders" plural="SchoolBeheerders" abbreviation="" alt_abbreviation="" id="66C968CF-936F-2382-55C2-0D0DF8F001BE" import_id="" description="" />
+   <glossaryWord name="achternaam" plural="achternamen" abbreviation="" alt_abbreviation="" id="EDF64BC6-9FE4-0054-7336-F9BA65F73453" import_id="" description="" />
+   <glossaryWord name="beheerderId" plural="beheerderIds" abbreviation="" alt_abbreviation="" id="3CE164F1-2236-274B-9E81-3A51C697BAEB" import_id="" description="" />
+   <glossaryWord name="emailAdres" plural="emailAddressen" abbreviation="" alt_abbreviation="" id="8A3FE246-645A-17E6-FE9B-1E73D8BD2976" import_id="" description="" />
+   <glossaryWord name="geslacht" plural="geslachten" abbreviation="" alt_abbreviation="" id="6FE48C3C-29CC-6E06-722F-3E5A91DBE743" import_id="" description="" />
+   <glossaryWord name="huisnummer" plural="huisnummers" abbreviation="" alt_abbreviation="" id="88118D39-55BC-9C31-A6B4-64FED9E56C55" import_id="" description="" />
+   <glossaryWord name="klasId" plural="klasIds" abbreviation="" alt_abbreviation="" id="1F17424C-B44A-1CD0-EBE2-EDDF21FB0FB8" import_id="" description="" />
+   <glossaryWord name="klasnummer" plural="klasnummers" abbreviation="" alt_abbreviation="" id="2D7F0E70-79A0-6D66-78F6-C92E752AD841" import_id="" description="" />
+   <glossaryWord name="land" plural="landen" abbreviation="" alt_abbreviation="" id="B8AEDB25-5132-DC36-216A-BE5B0325DCF6" import_id="" description="" />
+   <glossaryWord name="leerjaar" plural="leerjaren" abbreviation="" alt_abbreviation="" id="CA7AD06A-65D2-B682-686A-AAAC75790D86" import_id="" description="" />
+   <glossaryWord name="leerlingId" plural="leerlingIds" abbreviation="" alt_abbreviation="" id="8D7DEC45-3897-E342-B3BA-AEEBB648E468" import_id="" description="" />
+   <glossaryWord name="naam" plural="namen" abbreviation="" alt_abbreviation="" id="862B0140-3E7E-4C38-0C9D-984CE4BE5CA4" import_id="" description="" />
+   <glossaryWord name="postcode" plural="postcodes" abbreviation="" alt_abbreviation="" id="693ABA45-B787-4549-AB8D-616A85BE9F60" import_id="" description="" />
+   <glossaryWord name="schoolId" plural="schoolIds" abbreviation="" alt_abbreviation="" id="778E5142-6F56-4AE3-DAD1-3BE60B18AC2C" import_id="" description="" />
+   <glossaryWord name="straat" plural="straten" abbreviation="" alt_abbreviation="" id="8AAC1A09-5466-3A51-F176-F75801653EC7" import_id="" description="" />
+   <glossaryWord name="voornaam" plural="voornamen" abbreviation="" alt_abbreviation="" id="8005DEF2-88EB-0834-E3DE-49C558FA59EF" import_id="" description="" />
+   <glossaryWord name="wachtwoord" plural="wachtwoorden" abbreviation="" alt_abbreviation="" id="9F8F21FC-B191-C780-41BB-CFED1468F928" import_id="" description="" />
+
+</cwd_glossary>

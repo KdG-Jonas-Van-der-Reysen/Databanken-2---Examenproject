@@ -48,10 +48,11 @@ Attributen:
 - Klas
   - naam
   - leerjaar
-- Student
+- Leerling
   - voornaam
   - familienaam
   - klasnummer
+  - geslacht
 - SchoolBeheerder
   - beheerderSinds
 - Beheerder
@@ -60,6 +61,7 @@ Attributen:
   - e-mail adres
   - telefoonnummer
   - wachtwoord
+  - geslacht
 - Adres
   - straatnaam
   - huisnummer
