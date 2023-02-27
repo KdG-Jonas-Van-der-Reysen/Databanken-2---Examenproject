@@ -47,6 +47,7 @@ Attributen:
   - naam
 - Klas
   - naam
+  - leerjaar
 - Student
   - voornaam
   - familienaam
