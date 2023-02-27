@@ -1,0 +1,114 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="5DAF332A-C1FE-0F04-F7C1-4E826CC3401F" name="Leerlingen">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>370E2059-DDBB-AE83-E4BF-25B3BC6BBEDB</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="leerlingId" id="388805C2-4012-8F0C-A73A-A538249F91C1">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>CB93C3B9-D256-938D-9A8E-02E77E4AF285</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>6</dataTypeSize>
+<ownDataTypeParameters>6,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Klassen_klasId" id="C41FE48E-2F22-D82F-7A86-E071B63277B8">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>661A32FE-4FB3-565D-3188-250B78C4FCBD</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>6</dataTypeSize>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="800F2EAF-A06A-34C9-40ED-88EEB5CD91AA" referredColumn="F811912C-D3CB-1EF3-6089-E1BE2B8948EF"/>
+</associations>
+</Column>
+<Column name="voornaam" id="34A34396-8155-9B7A-6C47-1AC806F42DD6">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>37BE3E42-A950-55F7-D400-8B8BB9F1949C</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>25</dataTypeSize>
+<ownDataTypeParameters>25,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="achternaam" id="92848196-ED19-D7BC-55A0-23CD71367AF6">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>51EAE837-BC86-85E6-97CA-D71EE7FCE859</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="geslacht" id="A06E2682-9F53-4C48-3714-9DE6CD8B6BF5">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>F1011454-E0A4-4D3A-A902-10EA4B83920A</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<domain>6667C283-E4A7-B7F8-D7F8-08252C565DB3</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="klasnummer" id="7B93CEE0-85E4-2A8E-7411-46B28107F34B">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>30C3302A-81E3-689C-5C5E-37F236BF7A73</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>9425C9A5-F953-92C2-5E6A-A77D8B045825</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="3ACF3658-2DE0-4044-02A5-ED882B3D83BE" name="Leerlingen_PK">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>B4499D33-76CC-F6F3-541B-BE4D97CF830D</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="388805C2-4012-8F0C-A73A-A538249F91C1"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="47723FBC-8ABD-14FB-FFB8-F5143C5E07F6" name="Leerlingen_Klassen_FK">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>0EDF996A-4BA3-3707-7A4B-C7FB39A8C0CC</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C41FE48E-2F22-D82F-7A86-E071B63277B8"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

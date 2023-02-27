@@ -1,0 +1,116 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="CDA54621-811A-A2C7-38EE-AE5E64E235E5" name="Beheerder">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 13:40:21 UTC</createdTime>
+<ownerDesignName>DB_Design</ownerDesignName>
+<engineerTo>
+<item key="AF01A210-826F-12EB-AD3E-56C6E8C41955" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="beheerderId" id="BF4D0E1D-72E3-A5B4-61EE-A6A53AA4289D">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 13:51:40 UTC</createdTime>
+<ownerDesignName>DB_Design</ownerDesignName>
+<engineerTo>
+<item key="AF01A210-826F-12EB-AD3E-56C6E8C41955" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>6</dataTypeSize>
+<ownDataTypeParameters>6,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="voornaam" id="37637215-3C41-FC87-BEBD-1803F2E04609">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 13:51:50 UTC</createdTime>
+<ownerDesignName>DB_Design</ownerDesignName>
+<engineerTo>
+<item key="AF01A210-826F-12EB-AD3E-56C6E8C41955" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>25 BYTE</dataTypeSize>
+<ownDataTypeParameters>25 BYTE,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="achternaam" id="02D12CBB-1C07-62B2-BE82-244FB9FAC742">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 13:52:02 UTC</createdTime>
+<ownerDesignName>DB_Design</ownerDesignName>
+<engineerTo>
+<item key="AF01A210-826F-12EB-AD3E-56C6E8C41955" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 BYTE</dataTypeSize>
+<ownDataTypeParameters>50 BYTE,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="emailAdres" id="18A791CA-FB9F-84D8-35A1-537A5258ADFF">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 13:52:14 UTC</createdTime>
+<ownerDesignName>DB_Design</ownerDesignName>
+<engineerTo>
+<item key="AF01A210-826F-12EB-AD3E-56C6E8C41955" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>320 BYTE</dataTypeSize>
+<ownDataTypeParameters>320 BYTE,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="wachtwoord" id="AF3C883C-E68C-3675-4DD0-A3E1F2967415">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 13:52:27 UTC</createdTime>
+<ownerDesignName>DB_Design</ownerDesignName>
+<engineerTo>
+<item key="AF01A210-826F-12EB-AD3E-56C6E8C41955" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20 BYTE</dataTypeSize>
+<ownDataTypeParameters>20 BYTE,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="geslacht" id="18E6A414-5FE7-A107-39E9-CD4092715DBC">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:16:16 UTC</createdTime>
+<ownerDesignName>DB_Design</ownerDesignName>
+<engineerTo>
+<item key="AF01A210-826F-12EB-AD3E-56C6E8C41955" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<domain>6667C283-E4A7-B7F8-D7F8-08252C565DB3</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="9618D6C6-FE6B-7B54-4D68-E99C42B7A211" name="Beheerder PK">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 13:51:50 UTC</createdTime>
+<ownerDesignName>DB_Design</ownerDesignName>
+<engineerTo>
+<item key="AF01A210-826F-12EB-AD3E-56C6E8C41955" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<newElementsIDs>BF4D0E1D-72E3-A5B4-61EE-A6A53AA4289D</newElementsIDs>
+<usedAttributes>
+<attributeRef>BF4D0E1D-72E3-A5B4-61EE-A6A53AA4289D</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

@@ -1,0 +1,104 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="9B8E723E-0674-4B1D-B2F9-126929D65D90" name="Scholen">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>0369FA97-FE06-0921-7FC2-11D7D94B43E8</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="schoolId" id="9136F697-7618-B08D-4983-E834FC11D289">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>7DFF523E-E5C9-A2AF-AF43-209E28B6B80C</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>6</dataTypeSize>
+<ownDataTypeParameters>6,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="naam" id="07ECBF96-2D26-73E3-5C6A-6103FB852F51">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>2098F77C-6368-EF53-ADF2-BDA50E7CC5B3</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>25 BYTE</dataTypeSize>
+<ownDataTypeParameters>25 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="straat" id="B21A8373-7327-D804-7456-20686CA8BF86">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>8ECC1ABA-CD03-3460-5498-2894246704FA</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20 BYTE</dataTypeSize>
+<ownDataTypeParameters>20 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="huisnummer" id="0FED8755-DD36-C256-DB39-08D03D60ECCF">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>D6F89D5C-AA3C-2D8D-60BD-09D1E4B450AE</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>6 BYTE</dataTypeSize>
+<ownDataTypeParameters>6 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Gemeentes_postcode" id="8B150218-14F8-C0F5-C218-313125FB71F2">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>83BF20EA-7B1D-25B6-18BE-589999FDD873</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>6</dataTypeSize>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="12F693BF-B459-2D6E-FA35-17B4B1DA4ACE" referredColumn="3E8C689A-618A-A74E-47B6-84D153CEA3D0"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="116CC81E-61C0-4A1D-C71A-226C50539643" name="Scholen_PK">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>E10D2B54-C890-5693-83F3-E2854E482282</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="9136F697-7618-B08D-4983-E834FC11D289"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="52874E5D-0BE3-87D9-D3BC-ADDA3EFDCD65" name="Scholen_Gemeentes_FK">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>5C0C3C2D-6B3C-E639-782F-C421290F726F</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8B150218-14F8-C0F5-C218-313125FB71F2"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

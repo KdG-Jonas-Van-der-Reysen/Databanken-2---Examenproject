@@ -1,0 +1,81 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="DF53138A-E1AA-59C4-F23A-00A2DE1577CD" name="SchoolBeheerders">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>F50E1DED-14DC-5EBC-C65D-EB188947F309</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="Scholen_schoolId" id="5C9EE9A5-30B2-7F99-FA66-256847B8C868">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>52CAC532-4975-BCA6-51A2-472D0F606F97</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>6</dataTypeSize>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="6D1C78AD-CBBB-3856-E4FF-FB013BF7BDDA" referredColumn="9136F697-7618-B08D-4983-E834FC11D289"/>
+</associations>
+</Column>
+<Column name="Beheerders_beheerderId" id="83B0D29E-813F-C9F7-8A37-ED3C4A9F230B">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>3860B061-5A28-9E8C-2C33-1124BC51666C</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>6</dataTypeSize>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="E1AAF8F8-3545-18C2-D6DF-DAEADEF97289" referredColumn="2B5B32D8-39A0-5484-B19C-F49ACBE2AAF1"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="D37EAD3D-F71E-DB42-64F1-310480F84343" name="SchoolBeheerders_PK">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>69E29CD7-7111-DD89-7068-A374AA5F1F19</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="5C9EE9A5-30B2-7F99-FA66-256847B8C868"/>
+<colUsage columnID="83B0D29E-813F-C9F7-8A37-ED3C4A9F230B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="7704B810-1875-1218-5898-EF33297CE918" name="SchoolBeheerders_Scholen_FK">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>DAD457DA-7AB9-C726-FF51-9C9DD5E5D810</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="5C9EE9A5-30B2-7F99-FA66-256847B8C868"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="ABC03092-DAD5-6E81-FB3F-2FF5C77927DE" name="SchoolBeheerders_Beheerders_FK">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>6D8C7467-72D2-C97F-61D0-D6B7757C4F4A</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="83B0D29E-813F-C9F7-8A37-ED3C4A9F230B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

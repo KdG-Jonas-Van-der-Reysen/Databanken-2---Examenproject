@@ -1,0 +1,100 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="B6044477-8614-EEE7-5B7A-A0248CE8938D" name="Beheerders">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>CDA54621-811A-A2C7-38EE-AE5E64E235E5</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="beheerderId" id="2B5B32D8-39A0-5484-B19C-F49ACBE2AAF1">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>BF4D0E1D-72E3-A5B4-61EE-A6A53AA4289D</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>6</dataTypeSize>
+<ownDataTypeParameters>6,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="voornaam" id="232B81F7-9B23-55D8-E865-1DF7F6D8CFB9">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>37637215-3C41-FC87-BEBD-1803F2E04609</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>25 BYTE</dataTypeSize>
+<ownDataTypeParameters>25 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="achternaam" id="03043820-A6FC-1541-663B-833A24EFA427">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>02D12CBB-1C07-62B2-BE82-244FB9FAC742</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 BYTE</dataTypeSize>
+<ownDataTypeParameters>50 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="emailAdres" id="A484E734-A94D-B09D-8C57-9CB65A5E4864">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>18A791CA-FB9F-84D8-35A1-537A5258ADFF</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>320 BYTE</dataTypeSize>
+<ownDataTypeParameters>320 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="wachtwoord" id="5D633DD9-38AF-31A3-8404-4917F4A140E5">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>AF3C883C-E68C-3675-4DD0-A3E1F2967415</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20 BYTE</dataTypeSize>
+<ownDataTypeParameters>20 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="geslacht" id="159C351A-D855-9626-7CB0-46EAC0B81862">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>18E6A414-5FE7-A107-39E9-CD4092715DBC</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<domain>6667C283-E4A7-B7F8-D7F8-08252C565DB3</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="EFF5A2FB-4B72-2C4C-8522-AD1AF80470C6" name="Beheerders_PK">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>9618D6C6-FE6B-7B54-4D68-E99C42B7A211</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="2B5B32D8-39A0-5484-B19C-F49ACBE2AAF1"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

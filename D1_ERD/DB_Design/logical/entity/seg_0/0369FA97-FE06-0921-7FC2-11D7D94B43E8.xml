@@ -1,0 +1,104 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="0369FA97-FE06-0921-7FC2-11D7D94B43E8" name="School">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 13:39:47 UTC</createdTime>
+<ownerDesignName>DB_Design</ownerDesignName>
+<engineerTo>
+<item key="AF01A210-826F-12EB-AD3E-56C6E8C41955" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="schoolId" id="7DFF523E-E5C9-A2AF-AF43-209E28B6B80C">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 13:46:36 UTC</createdTime>
+<ownerDesignName>DB_Design</ownerDesignName>
+<engineerTo>
+<item key="AF01A210-826F-12EB-AD3E-56C6E8C41955" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>6</dataTypeSize>
+<ownDataTypeParameters>6,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="naam" id="2098F77C-6368-EF53-ADF2-BDA50E7CC5B3">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 13:46:53 UTC</createdTime>
+<ownerDesignName>DB_Design</ownerDesignName>
+<engineerTo>
+<item key="AF01A210-826F-12EB-AD3E-56C6E8C41955" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>25 BYTE</dataTypeSize>
+<ownDataTypeParameters>25 BYTE,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="straat" id="8ECC1ABA-CD03-3460-5498-2894246704FA">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 13:47:17 UTC</createdTime>
+<ownerDesignName>DB_Design</ownerDesignName>
+<engineerTo>
+<item key="AF01A210-826F-12EB-AD3E-56C6E8C41955" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20 BYTE</dataTypeSize>
+<ownDataTypeParameters>20 BYTE,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="huisnummer" id="D6F89D5C-AA3C-2D8D-60BD-09D1E4B450AE">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 13:47:26 UTC</createdTime>
+<ownerDesignName>DB_Design</ownerDesignName>
+<engineerTo>
+<item key="AF01A210-826F-12EB-AD3E-56C6E8C41955" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>6 BYTE</dataTypeSize>
+<ownDataTypeParameters>6 BYTE,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="postcode" id="83BF20EA-7B1D-25B6-18BE-589999FDD873">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 13:57:51 UTC</createdTime>
+<generatorID>5C0C3C2D-6B3C-E639-782F-C421290F726F</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<engineerTo>
+<item key="AF01A210-826F-12EB-AD3E-56C6E8C41955" value="true"/>
+</engineerTo>
+<referedAttribute>8182771F-52A0-B3F1-82BF-5EB8C53EB8E5</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>6</dataTypeSize>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="E10D2B54-C890-5693-83F3-E2854E482282" name="School PK">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 13:50:44 UTC</createdTime>
+<ownerDesignName>DB_Design</ownerDesignName>
+<engineerTo>
+<item key="AF01A210-826F-12EB-AD3E-56C6E8C41955" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<newElementsIDs>7DFF523E-E5C9-A2AF-AF43-209E28B6B80C</newElementsIDs>
+<usedAttributes>
+<attributeRef>7DFF523E-E5C9-A2AF-AF43-209E28B6B80C</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

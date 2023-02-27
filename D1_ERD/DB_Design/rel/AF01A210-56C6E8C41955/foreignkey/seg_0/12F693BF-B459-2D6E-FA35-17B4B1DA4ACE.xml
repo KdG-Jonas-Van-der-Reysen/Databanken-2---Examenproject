@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="12F693BF-B459-2D6E-FA35-17B4B1DA4ACE" containerWithKeyObject="9B8E723E-0674-4B1D-B2F9-126929D65D90" localFKIndex="52874E5D-0BE3-87D9-D3BC-ADDA3EFDCD65" name="Scholen_Gemeentes_FK">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>5C0C3C2D-6B3C-E639-782F-C421290F726F</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<referredTableLongName>Gemeentes</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>2256C0E4-400D-B121-79F1-B50F21300B84</referredTableID>
+<keyObject>A975C461-3C01-3456-8C51-77A0CE23354B</keyObject>
+<referredKeyID>A975C461-3C01-3456-8C51-77A0CE23354B</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>postcode</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

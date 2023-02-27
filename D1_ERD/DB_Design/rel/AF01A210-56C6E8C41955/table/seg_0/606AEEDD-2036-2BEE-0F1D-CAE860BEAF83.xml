@@ -1,0 +1,97 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="606AEEDD-2036-2BEE-0F1D-CAE860BEAF83" name="Klassen">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>D1FC411F-3A68-64F5-24AE-16D15EF6A89E</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="klasId" id="F811912C-D3CB-1EF3-6089-E1BE2B8948EF">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>0B3E3BC3-15B3-EE69-65EC-BE8644A61DF2</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>6</dataTypeSize>
+<ownDataTypeParameters>6,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Scholen_schoolId" id="1FB80BE8-3278-8BCC-732C-260B41D8C51E">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>7D135CF5-7B8F-32C6-FE3D-10154A6A2E3B</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>6</dataTypeSize>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="6C419FEF-762E-EDC7-3153-F17FEEC7DD86" referredColumn="9136F697-7618-B08D-4983-E834FC11D289"/>
+</associations>
+</Column>
+<Column name="naam" id="ED89F689-5B80-7F5C-B854-B2E4A99AF82A">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>569C880E-A95F-96DB-6253-CA2BC4157F0E</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>15</dataTypeSize>
+<ownDataTypeParameters>15,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="leerjaar" id="81B3FB2F-D848-2604-239E-FAE7B6D2C25F">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>AB92C84E-BD98-2811-871C-6B692126E52F</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>0</dataTypePrecision>
+<domain>29FE306B-0E07-94AF-4665-AA5F00CC8C04</domain>
+<ownDataTypeParameters>,0,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<listOfRanges>
+<rangeDef class="oracle.dbtools.crest.model.design.constraint.AVT">
+<beginValue>1</beginValue>
+<endValue>6</endValue>
+<description>Enkel waarden van 1 tem 6</description>
+</rangeDef>
+</listOfRanges>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="FF9405E8-BB9B-7E8D-450E-FBB7EF68DB65" name="Klassen_PK">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>C42F4BC4-ED8C-4466-A216-FB4EC47E1E48</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="F811912C-D3CB-1EF3-6089-E1BE2B8948EF"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="AEB5E9BD-D71E-23A7-C6E7-77817E7F6CAE" name="Klassen_Scholen_FK">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 14:33:01 UTC</createdTime>
+<generatorID>E48A73B2-5AB7-CA88-94A5-FC9AA55867C5</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="1FB80BE8-3278-8BCC-732C-260B41D8C51E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>
