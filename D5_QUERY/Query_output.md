@@ -2,7 +2,9 @@ Milestone 3: Creatie Databank
 ---
 
     Identity columns
+
 ---
+
 - Mandatory
     - scholen: schoolid
     - beheerders: beheerderid
@@ -11,72 +13,75 @@ Milestone 3: Creatie Databank
 - other:
     - none
 
-
       Table Counts
+
 ---
-![Table counts](./screenshots/table_count.PNG)
+![Table counts](./screenshots/table_count.png)
 
     @query 1: Relatie Veel-op-veel
 
-    SELECT game_title, release_date, patch_title, p.PLAYER_NAME, h.HIGHSCORE, date_played, email
-    FROM computergames cg
-    JOIN highscores h ON cg.game_id = h.game_id
-    JOIN players p ON h.player_id = p.player_id;
+    SELECT b.VOORNAAM,
+       b.ACHTERNAAM,
+       b.GESLACHT,
+       s.NAAM AS Schoolnaam
+
+    FROM beheerders b
+    
+        INNER JOIN SCHOOLBEHEERDERS SB on b.BEHEERDERID = SB.BEHEERDERS_BEHEERDERID
+        INNER JOIN SCHOLEN S on SB.SCHOLEN_SCHOOLID = S.SCHOOLID;
+
 --- 
-![query 1: Relatie Veel-op-veel](./screenshots/veel_op_veel.PNG)
-
-
+![query 1: Relatie Veel-op-veel](./screenshots/veel_op_veel.png)
 
     @query 2: 2 niveau’s diep
 
-    SELECT game_title, channel_name, channel_url, subscriber_count, video_title, viewer_count, duration
-    FROM computergames cg
-    JOIN influencer_youtubechannels iyc ON cg.game_id = iyc.game_id
-    JOIN influencer_youtubevideos iyv ON iyc.channel_id = iyv.channel_id
-    ORDER BY game_title, channel_name, video_title;
+    SELECT s.NAAM as schoolnaam,
+       k.NAAM as klasnaam,
+       l.VOORNAAM,
+       l.ACHTERNAAM
+    from SCHOLEN s
+      join KLASSEN K on s.SCHOOLID = K.SCHOLEN_SCHOOLID
+      join LEERLINGEN L on K.KLASID = L.KLASSEN_KLASID;
+
 --- 
-![query 2: 2 niveau’s diep](./screenshots/2_niveaus_diep.PNG)
+![query 2: 2 niveau’s diep](./screenshots/2_niveaus_diep.png)
 
-    @query 3: player_locations
+    @query 3: School addressen
 
-    SELECT zc.countrycode AS "COUNTRY", zc.zipcode AS "ZIP", city, country_name, street, housenumber, p.player_name
-    FROM countries c
-    JOIN zipcodes zc ON c.countrycode = zc.countrycode
-    JOIN locations lc ON zc.countrycode = lc.countrycode AND zc.zipcode = lc.zipcode
-    JOIN player_locations pl ON lc.location_id = pl.location_id
-    JOIN players p ON pl.player_id = p.player_id
-    ORDER BY player_name, country;
+    SELECT
+        s.NAAM as schoolnaam,
+        s.STRAAT as straat,
+        s.HUISNUMMER as huisnummer,
+        g.POSTCODE as postcode,
+        g.GEMEENTE as gemeente
+    FROM SCHOLEN S
+    JOIN GEMEENTES G on s.GEMEENTES_POSTCODE = G.POSTCODE;
+
 --- 
-![query 3: player locations](./screenshots/player_locations.PNG)
-
-    @query 4: Game studios
-
-    SELECT gs.studio_name, zc.zipcode, zc.city, c.country_name, release_date, cg.game_title
-    FROM computergames cg
-    JOIN gamestudios gs ON cg.studio_id = gs.studio_id
-    JOIN locations l ON gs.studio_address = l.location_id
-    JOIN zipcodes zc ON l.countrycode = zc.countrycode AND l.zipcode = zc.zipcode
-    JOIN countries c ON zc.countrycode = c.countrycode
-    ORDER BY gs.studio_name,  cg.game_title;
---- 
-![query 4: Game studios](./screenshots/game_studio.PNG)
-
+![query 3: School addressen](./screenshots/school_addressen.png)
+  
 
 Bewijs Domeinen - constraints M2
 --- 
-    Player: zipcodes - minumum 4 characters
+
+    Beheerder: Geslacht - M,v of x
 
 ---
-![Bewijs Zipcodes](./screenshots/bewijs_zipcodes.PNG)
+![Bewijs beheerder geslacht](./screenshots/bewijs_beheerder_geslacht.png)
 
-    Player: email must contains @
-
----
-![Bewijs email](./screenshots/bewijs_email.PNG)
-
-
-    Computergame: release_date < last_updated
+    Leerling: Geslacht - M,v of x
 
 ---
+![Bewijs leerling geslacht](./screenshots/bewijs_leerling_geslacht.png)
 
-![Bewijs release_patch_dates](./screenshots/bewijs_release_patch_date.PNG)
+    Klas: leerjaar - 1 tot en met 6
+
+---
+
+![Bewijs leerjaar 1 t.e.m. 6](./screenshots/bewijs_klas_leerjaar.png)
+
+    Leerling: klasnummer - 1 tot en met 40
+
+---
+
+![Bewijs klasnummer 1 t.e.m. 40](./screenshots/bewijs_leerling_klasnummer.png)

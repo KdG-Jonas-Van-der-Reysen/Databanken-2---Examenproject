@@ -38,7 +38,7 @@ CREATE TABLE leerlingen
     voornaam       VARCHAR2(25),
     achternaam     VARCHAR2(50),
     geslacht       CHAR(1) CHECK ( geslacht IN ('M', 'V', 'X') ),
-    klasnummer     NUMBER                                                                 NOT NULL
+    klasnummer     NUMBER                                                                 NOT NULL CHECK ( klasnummer BETWEEN 1 AND 40 )
 );
 
 CREATE TABLE scholen
