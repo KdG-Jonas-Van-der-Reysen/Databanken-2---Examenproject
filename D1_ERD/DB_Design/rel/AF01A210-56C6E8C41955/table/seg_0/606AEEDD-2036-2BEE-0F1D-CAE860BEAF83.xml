@@ -15,9 +15,8 @@
 <ownerDesignName>DB_Design</ownerDesignName>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
-<logicalDatatype>LOGDT024</logicalDatatype>
-<dataTypeSize>6</dataTypeSize>
-<ownDataTypeParameters>6,,</ownDataTypeParameters>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
 <Column name="Scholen_schoolId" id="1FB80BE8-3278-8BCC-732C-260B41D8C51E">
@@ -27,8 +26,7 @@
 <ownerDesignName>DB_Design</ownerDesignName>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
-<logicalDatatype>LOGDT025</logicalDatatype>
-<dataTypeSize>6</dataTypeSize>
+<logicalDatatype>LOGDT019</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <previousColumn>false</previousColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
@@ -54,6 +52,7 @@
 <createdTime>2023-02-27 14:33:01 UTC</createdTime>
 <generatorID>AB92C84E-BD98-2811-871C-6B692126E52F</generatorID>
 <ownerDesignName>DB_Design</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
 <use>0</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
 <dataTypePrecision>0</dataTypePrecision>

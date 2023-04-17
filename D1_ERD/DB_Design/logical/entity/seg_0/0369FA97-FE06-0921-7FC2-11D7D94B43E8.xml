@@ -24,9 +24,8 @@
 </engineerTo>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
-<logicalDatatype>LOGDT025</logicalDatatype>
-<dataTypeSize>6</dataTypeSize>
-<ownDataTypeParameters>6,,</ownDataTypeParameters>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="naam" id="2098F77C-6368-EF53-ADF2-BDA50E7CC5B3">
 <createdBy>jonass</createdBy>
@@ -70,7 +69,7 @@
 <dataTypeSize>6 BYTE</dataTypeSize>
 <ownDataTypeParameters>6 BYTE,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="postcode" id="83BF20EA-7B1D-25B6-18BE-589999FDD873">
+<Attribute name="Gemeentes postcode" id="83BF20EA-7B1D-25B6-18BE-589999FDD873">
 <createdBy>jonass</createdBy>
 <createdTime>2023-02-27 13:57:51 UTC</createdTime>
 <generatorID>5C0C3C2D-6B3C-E639-782F-C421290F726F</generatorID>
@@ -83,16 +82,17 @@
 <use>1</use>
 <logicalDatatype>LOGDT024</logicalDatatype>
 <dataTypeSize>6</dataTypeSize>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
+<ownDataTypeParameters>6,,</ownDataTypeParameters>
 </Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
-<identifier id="E10D2B54-C890-5693-83F3-E2854E482282" name="School PK">
+<identifier id="E10D2B54-C890-5693-83F3-E2854E482282" name="Scholen_PK">
 <createdBy>jonass</createdBy>
 <createdTime>2023-02-27 13:50:44 UTC</createdTime>
 <ownerDesignName>DB_Design</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="AF01A210-826F-12EB-AD3E-56C6E8C41955" value="true"/>
+<item key="AF01A210-826F-12EB-AD3E-56C6E8C41955" value="false"/>
 </engineerTo>
 <pk>true</pk>
 <newElementsIDs>7DFF523E-E5C9-A2AF-AF43-209E28B6B80C</newElementsIDs>

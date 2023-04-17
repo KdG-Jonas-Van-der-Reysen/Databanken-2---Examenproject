@@ -15,9 +15,8 @@
 <ownerDesignName>DB_Design</ownerDesignName>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
-<logicalDatatype>LOGDT024</logicalDatatype>
-<dataTypeSize>6</dataTypeSize>
-<ownDataTypeParameters>6,,</ownDataTypeParameters>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
 <Column name="Klassen_klasId" id="C41FE48E-2F22-D82F-7A86-E071B63277B8">
@@ -27,9 +26,9 @@
 <ownerDesignName>DB_Design</ownerDesignName>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
-<logicalDatatype>LOGDT024</logicalDatatype>
+<logicalDatatype>LOGDT019</logicalDatatype>
 <dataTypeSize>6</dataTypeSize>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
+<ownDataTypeParameters>6,,</ownDataTypeParameters>
 <previousColumn>false</previousColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 <associations>
@@ -79,6 +78,7 @@
 <createdTime>2023-02-27 14:33:01 UTC</createdTime>
 <generatorID>30C3302A-81E3-689C-5C5E-37F236BF7A73</generatorID>
 <ownerDesignName>DB_Design</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
 <use>0</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
 <domain>9425C9A5-F953-92C2-5E6A-A77D8B045825</domain>

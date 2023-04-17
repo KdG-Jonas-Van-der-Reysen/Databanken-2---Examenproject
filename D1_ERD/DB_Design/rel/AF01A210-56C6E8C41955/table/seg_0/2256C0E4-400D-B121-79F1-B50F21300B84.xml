@@ -46,6 +46,22 @@
 <ownDataTypeParameters>20,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
+<Column name="landen_landid" id="50D2B618-21C0-24EA-E53E-A4BA81C7B2D3">
+<createdBy>jonass</createdBy>
+<createdTime>2023-04-17 09:18:18 UTC</createdTime>
+<generatorID>84817870-B339-F054-7653-EF0D31678B49</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="238C530D-F829-C00C-EFF5-37081C7039BF" referredColumn="C72E8A0A-3582-E140-8C9B-AC7E64E92B3F"/>
+</associations>
+</Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
 <ind_PK_UK id="A975C461-3C01-3456-8C51-77A0CE23354B" name="Gemeentes_PK">
@@ -58,6 +74,17 @@
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
 <colUsage columnID="3E8C689A-618A-A74E-47B6-84D153CEA3D0"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="5677FCF9-C6CD-34B6-63CA-5DEBB6C68055" name="Gemeentes_landen_FK">
+<createdBy>jonass</createdBy>
+<createdTime>2023-04-17 09:18:18 UTC</createdTime>
+<generatorID>0563125E-D75A-F647-50F5-12AC3F9A6DB0</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="50D2B618-21C0-24EA-E53E-A4BA81C7B2D3"/>
 </indexColumnUsage>
 </ind_PK_UK>
 </indexes>

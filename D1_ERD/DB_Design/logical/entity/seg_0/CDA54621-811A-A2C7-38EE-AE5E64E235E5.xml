@@ -24,9 +24,8 @@
 </engineerTo>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
-<logicalDatatype>LOGDT024</logicalDatatype>
-<dataTypeSize>6</dataTypeSize>
-<ownDataTypeParameters>6,,</ownDataTypeParameters>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="voornaam" id="37637215-3C41-FC87-BEBD-1803F2E04609">
 <createdBy>jonass</createdBy>
@@ -99,12 +98,13 @@
 </Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
-<identifier id="9618D6C6-FE6B-7B54-4D68-E99C42B7A211" name="Beheerder PK">
+<identifier id="9618D6C6-FE6B-7B54-4D68-E99C42B7A211" name="Beheerders_PK">
 <createdBy>jonass</createdBy>
 <createdTime>2023-02-27 13:51:50 UTC</createdTime>
 <ownerDesignName>DB_Design</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="AF01A210-826F-12EB-AD3E-56C6E8C41955" value="true"/>
+<item key="AF01A210-826F-12EB-AD3E-56C6E8C41955" value="false"/>
 </engineerTo>
 <pk>true</pk>
 <newElementsIDs>BF4D0E1D-72E3-A5B4-61EE-A6A53AA4289D</newElementsIDs>

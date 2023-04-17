@@ -14,7 +14,6 @@ Conceptueel Model
 - SchoolBeheerder(**schoolId**,**beheerderId**, beheerderSinds)
 - Beheerder ( **beheerderId**, voornaam, familienaam, emailAdres, wachtwoord,geslacht)
 - Adres (**Adres**, straatnaam, huisnummer, bus, postcode, gemeente)
-
 ---
     Domeinen - constraints
 ---
@@ -49,7 +48,10 @@ Logisch Model
 
 Verschillen na Normalisatie
 ---
-- Extra entiteit: Gemeentes
+- Extra entiteiten:
+  - Gemeentes
+  - Landen
+  - Abonnement
 - Verwijderde entiteit: Adres
 
 ![Finaal Model](finaal_erd.png)

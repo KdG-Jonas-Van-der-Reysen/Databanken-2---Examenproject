@@ -15,9 +15,8 @@
 <ownerDesignName>DB_Design</ownerDesignName>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
-<logicalDatatype>LOGDT025</logicalDatatype>
-<dataTypeSize>6</dataTypeSize>
-<ownDataTypeParameters>6,,</ownDataTypeParameters>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
 <Column name="naam" id="07ECBF96-2D26-73E3-5C6A-6103FB852F51">
@@ -68,11 +67,27 @@
 <use>1</use>
 <logicalDatatype>LOGDT024</logicalDatatype>
 <dataTypeSize>6</dataTypeSize>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
+<ownDataTypeParameters>6,,</ownDataTypeParameters>
 <previousColumn>false</previousColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 <associations>
 <colAssociation fkAssociation="12F693BF-B459-2D6E-FA35-17B4B1DA4ACE" referredColumn="3E8C689A-618A-A74E-47B6-84D153CEA3D0"/>
+</associations>
+</Column>
+<Column name="Abonnement_abonnementId" id="423355FC-B956-21E3-E51A-3E7D1B804A01">
+<createdBy>jonass</createdBy>
+<createdTime>2023-04-17 09:18:18 UTC</createdTime>
+<generatorID>59C166CB-5396-3DD6-D7D9-28132404F906</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="8852DC5D-A047-9BDC-952A-278B6CF43AC1" referredColumn="69FDBF95-EA37-F5CB-6AFA-E0FE61B08CCF"/>
 </associations>
 </Column>
 </columns>
@@ -98,6 +113,17 @@
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
 <colUsage columnID="8B150218-14F8-C0F5-C218-313125FB71F2"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="7D13CCD4-143F-5AFF-CC57-7013BF97FE44" name="Scholen_Abonnement_FK">
+<createdBy>jonass</createdBy>
+<createdTime>2023-04-17 09:18:18 UTC</createdTime>
+<generatorID>109644DD-82DE-6DF4-E1E4-4C1081B01794</generatorID>
+<ownerDesignName>DB_Design</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="423355FC-B956-21E3-E51A-3E7D1B804A01"/>
 </indexColumnUsage>
 </ind_PK_UK>
 </indexes>

@@ -5,7 +5,7 @@
 <generatorID>DAD457DA-7AB9-C726-FF51-9C9DD5E5D810</generatorID>
 <ownerDesignName>DB_Design</ownerDesignName>
 <referredTableLongName>Scholen</referredTableLongName>
-<deleteRule>CASCADE</deleteRule>
+<deleteRule>NO ACTION</deleteRule>
 <referredTableID>9B8E723E-0674-4B1D-B2F9-126929D65D90</referredTableID>
 <keyObject>116CC81E-61C0-4A1D-C71A-226C50539643</keyObject>
 <referredKeyID>116CC81E-61C0-4A1D-C71A-226C50539643</referredKeyID>

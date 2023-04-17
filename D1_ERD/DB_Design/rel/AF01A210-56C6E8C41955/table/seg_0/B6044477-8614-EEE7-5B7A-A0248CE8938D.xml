@@ -15,9 +15,8 @@
 <ownerDesignName>DB_Design</ownerDesignName>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
-<logicalDatatype>LOGDT024</logicalDatatype>
-<dataTypeSize>6</dataTypeSize>
-<ownDataTypeParameters>6,,</ownDataTypeParameters>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
 <Column name="voornaam" id="232B81F7-9B23-55D8-E865-1DF7F6D8CFB9">
@@ -51,6 +50,7 @@
 <createdTime>2023-02-27 14:33:01 UTC</createdTime>
 <generatorID>18A791CA-FB9F-84D8-35A1-537A5258ADFF</generatorID>
 <ownerDesignName>DB_Design</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT024</logicalDatatype>
@@ -63,6 +63,7 @@
 <createdTime>2023-02-27 14:33:01 UTC</createdTime>
 <generatorID>AF3C883C-E68C-3675-4DD0-A3E1F2967415</generatorID>
 <ownerDesignName>DB_Design</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT024</logicalDatatype>

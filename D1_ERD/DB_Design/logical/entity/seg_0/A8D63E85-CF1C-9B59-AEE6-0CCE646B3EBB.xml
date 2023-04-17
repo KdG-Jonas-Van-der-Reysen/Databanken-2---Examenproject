@@ -28,7 +28,7 @@
 <dataTypeSize>6</dataTypeSize>
 <ownDataTypeParameters>6,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="gemeente" id="078CDFB1-49AB-4A09-33B7-A2C978085AA9">
+<Attribute name="Gemeente" id="078CDFB1-49AB-4A09-33B7-A2C978085AA9">
 <createdBy>jonass</createdBy>
 <createdTime>2023-02-27 13:57:55 UTC</createdTime>
 <ownerDesignName>DB_Design</ownerDesignName>
@@ -56,14 +56,30 @@
 <dataTypeSize>20</dataTypeSize>
 <ownDataTypeParameters>20,,</ownDataTypeParameters>
 </Attribute>
-</attributes>
-<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
-<identifier id="AE8FC9B7-206A-75DD-9BC5-312FF0DE0545" name="Gemeente PK">
+<Attribute name="landen landid" id="4DD404ED-2939-9F9C-396F-FB99901102A2">
 <createdBy>jonass</createdBy>
-<createdTime>2023-02-27 13:57:31 UTC</createdTime>
+<createdTime>2023-04-17 09:21:07 UTC</createdTime>
+<generatorID>1DF1C722-D9EE-6E24-5729-75A57ABF1EF4</generatorID>
 <ownerDesignName>DB_Design</ownerDesignName>
 <engineerTo>
 <item key="AF01A210-826F-12EB-AD3E-56C6E8C41955" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<referedAttribute>508F070F-8338-A764-0727-080031692AD5</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="AE8FC9B7-206A-75DD-9BC5-312FF0DE0545" name="Gemeentes_PK">
+<createdBy>jonass</createdBy>
+<createdTime>2023-02-27 13:57:31 UTC</createdTime>
+<ownerDesignName>DB_Design</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
+<engineerTo>
+<item key="AF01A210-826F-12EB-AD3E-56C6E8C41955" value="false"/>
 </engineerTo>
 <pk>true</pk>
 <newElementsIDs>8182771F-52A0-B3F1-82BF-5EB8C53EB8E5</newElementsIDs>

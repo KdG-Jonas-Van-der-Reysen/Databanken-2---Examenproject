@@ -24,11 +24,10 @@
 </engineerTo>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
-<logicalDatatype>LOGDT024</logicalDatatype>
-<dataTypeSize>6</dataTypeSize>
-<ownDataTypeParameters>6,,</ownDataTypeParameters>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="schoolId" id="7D135CF5-7B8F-32C6-FE3D-10154A6A2E3B">
+<Attribute name="Scholen schoolId" id="7D135CF5-7B8F-32C6-FE3D-10154A6A2E3B">
 <createdBy>jonass</createdBy>
 <createdTime>2023-02-27 13:54:38 UTC</createdTime>
 <generatorID>E48A73B2-5AB7-CA88-94A5-FC9AA55867C5</generatorID>
@@ -39,9 +38,9 @@
 <referedAttribute>7DFF523E-E5C9-A2AF-AF43-209E28B6B80C</referedAttribute>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
-<logicalDatatype>LOGDT025</logicalDatatype>
+<logicalDatatype>LOGDT019</logicalDatatype>
 <dataTypeSize>6</dataTypeSize>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
+<ownDataTypeParameters>6,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="naam" id="569C880E-A95F-96DB-6253-CA2BC4157F0E">
 <createdBy>jonass</createdBy>
@@ -80,12 +79,13 @@
 </Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
-<identifier id="C42F4BC4-ED8C-4466-A216-FB4EC47E1E48" name="Klas PK">
+<identifier id="C42F4BC4-ED8C-4466-A216-FB4EC47E1E48" name="Klassen_PK">
 <createdBy>jonass</createdBy>
 <createdTime>2023-02-27 13:53:13 UTC</createdTime>
 <ownerDesignName>DB_Design</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="AF01A210-826F-12EB-AD3E-56C6E8C41955" value="true"/>
+<item key="AF01A210-826F-12EB-AD3E-56C6E8C41955" value="false"/>
 </engineerTo>
 <pk>true</pk>
 <usedAttributes>

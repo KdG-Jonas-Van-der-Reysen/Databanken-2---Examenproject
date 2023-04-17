@@ -5,7 +5,7 @@
 <generatorID>6D8C7467-72D2-C97F-61D0-D6B7757C4F4A</generatorID>
 <ownerDesignName>DB_Design</ownerDesignName>
 <referredTableLongName>Beheerders</referredTableLongName>
-<deleteRule>CASCADE</deleteRule>
+<deleteRule>NO ACTION</deleteRule>
 <referredTableID>B6044477-8614-EEE7-5B7A-A0248CE8938D</referredTableID>
 <keyObject>EFF5A2FB-4B72-2C4C-8522-AD1AF80470C6</keyObject>
 <referredKeyID>EFF5A2FB-4B72-2C4C-8522-AD1AF80470C6</referredKeyID>

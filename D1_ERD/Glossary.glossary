@@ -1,30 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<cwd_glossary name="DB_Design" description="generated from logical model of design DB_Design" id="08CF8385-1A72-2D4E-AC21-EDDECE636971" incomplete_modifiers="true" >
+<cwd_glossary name="DB_Design" description="generated from logical model of design DB_Design" id="F50FCD51-9C22-F97E-1232-27EBFCB042E9" incomplete_modifiers="true" >
 
-   <glossaryWord name="Beheerder" plural="Beheerders" abbreviation="" alt_abbreviation="" id="14BE3049-03D4-BB1F-AF07-D091CC2A0DAF" import_id="" description="" />
-   <glossaryWord name="Gemeente" plural="Gemeentes" abbreviation="" alt_abbreviation="" id="6EAB2F8B-B163-6594-F751-A55C21BD53EF" import_id="" description="" />
-   <glossaryWord name="Klas" plural="Klassen" abbreviation="" alt_abbreviation="" id="3B9281F8-3E5F-232B-4927-636165FA2883" import_id="" description="" />
-   <glossaryWord name="Leerling" plural="Leerlingen" abbreviation="" alt_abbreviation="" id="9EA8BF04-2527-4AAC-24B0-64D45C10EDE2" import_id="" description="" />
-   <glossaryWord name="PK" plural="PKs" abbreviation="" alt_abbreviation="" id="ED2A8F21-7975-AAF8-3704-89BCA0D0798D" import_id="" description="" />
-   <glossaryWord name="School" plural="Scholen" abbreviation="" alt_abbreviation="" id="90C79143-8390-69D8-C3B9-D58E426E4DEF" import_id="" description="" />
-   <glossaryWord name="SchoolBeheerder" plural="SchoolBeheerders" abbreviation="" alt_abbreviation="" id="3C38BD64-26A7-BB44-5095-2AA49B301938" import_id="" description="" />
-   <glossaryWord name="SchoolBeheerders" plural="SchoolBeheerders" abbreviation="" alt_abbreviation="" id="66C968CF-936F-2382-55C2-0D0DF8F001BE" import_id="" description="" />
-   <glossaryWord name="achternaam" plural="achternamen" abbreviation="" alt_abbreviation="" id="EDF64BC6-9FE4-0054-7336-F9BA65F73453" import_id="" description="" />
-   <glossaryWord name="beheerderId" plural="beheerderIds" abbreviation="" alt_abbreviation="" id="3CE164F1-2236-274B-9E81-3A51C697BAEB" import_id="" description="" />
-   <glossaryWord name="emailAdres" plural="emailAddressen" abbreviation="" alt_abbreviation="" id="8A3FE246-645A-17E6-FE9B-1E73D8BD2976" import_id="" description="" />
-   <glossaryWord name="geslacht" plural="geslachten" abbreviation="" alt_abbreviation="" id="6FE48C3C-29CC-6E06-722F-3E5A91DBE743" import_id="" description="" />
-   <glossaryWord name="huisnummer" plural="huisnummers" abbreviation="" alt_abbreviation="" id="88118D39-55BC-9C31-A6B4-64FED9E56C55" import_id="" description="" />
-   <glossaryWord name="klasId" plural="klasIds" abbreviation="" alt_abbreviation="" id="1F17424C-B44A-1CD0-EBE2-EDDF21FB0FB8" import_id="" description="" />
-   <glossaryWord name="klasnummer" plural="klasnummers" abbreviation="" alt_abbreviation="" id="2D7F0E70-79A0-6D66-78F6-C92E752AD841" import_id="" description="" />
-   <glossaryWord name="land" plural="landen" abbreviation="" alt_abbreviation="" id="B8AEDB25-5132-DC36-216A-BE5B0325DCF6" import_id="" description="" />
-   <glossaryWord name="leerjaar" plural="leerjaren" abbreviation="" alt_abbreviation="" id="CA7AD06A-65D2-B682-686A-AAAC75790D86" import_id="" description="" />
-   <glossaryWord name="leerlingId" plural="leerlingIds" abbreviation="" alt_abbreviation="" id="8D7DEC45-3897-E342-B3BA-AEEBB648E468" import_id="" description="" />
-   <glossaryWord name="naam" plural="namen" abbreviation="" alt_abbreviation="" id="862B0140-3E7E-4C38-0C9D-984CE4BE5CA4" import_id="" description="" />
-   <glossaryWord name="postcode" plural="postcodes" abbreviation="" alt_abbreviation="" id="693ABA45-B787-4549-AB8D-616A85BE9F60" import_id="" description="" />
-   <glossaryWord name="schoolId" plural="schoolIds" abbreviation="" alt_abbreviation="" id="778E5142-6F56-4AE3-DAD1-3BE60B18AC2C" import_id="" description="" />
-   <glossaryWord name="straat" plural="straten" abbreviation="" alt_abbreviation="" id="8AAC1A09-5466-3A51-F176-F75801653EC7" import_id="" description="" />
-   <glossaryWord name="voornaam" plural="voornamen" abbreviation="" alt_abbreviation="" id="8005DEF2-88EB-0834-E3DE-49C558FA59EF" import_id="" description="" />
-   <glossaryWord name="wachtwoord" plural="wachtwoorden" abbreviation="" alt_abbreviation="" id="9F8F21FC-B191-C780-41BB-CFED1468F928" import_id="" description="" />
+   <glossaryWord name="Abonnement" plural="Abonnementen" abbreviation="" alt_abbreviation="" id="DE559737-5163-09EB-15D7-99D62FDC20E6" import_id="" description="" />
+   <glossaryWord name="Beheerder" plural="Beheerders" abbreviation="" alt_abbreviation="" id="184D6E9C-91F7-D221-CCBF-CACBB572D6BB" import_id="" description="" />
+   <glossaryWord name="Gemeente" plural="Gemeentes" abbreviation="" alt_abbreviation="" id="86597411-22AB-082B-FC3E-3027A7B8EEA1" import_id="" description="" />
+   <glossaryWord name="Klas" plural="Klassen" abbreviation="" alt_abbreviation="" id="33E18355-1221-495B-0932-E5D190C75895" import_id="48550A64-60F9-68DE-0FD8-5010B284635A" description="" />
+   <glossaryWord name="Leerling" plural="Leerlingen" abbreviation="" alt_abbreviation="" id="8822949A-D8B0-021C-3FD9-7E48F6546624" import_id="" description="" />
+   <glossaryWord name="PK" plural="PKs" abbreviation="" alt_abbreviation="" id="F940B032-FB7B-D6AA-5402-64D69EA4E116" import_id="0E6B554A-5113-A97F-3BC0-8514CBD8471E" description="" />
+   <glossaryWord name="School" plural="Scholen" abbreviation="" alt_abbreviation="" id="C38430BC-1EBA-D475-C64A-189CE285F6EA" import_id="" description="" />
+   <glossaryWord name="SchoolBeheerder" plural="SchoolBeheerders" abbreviation="" alt_abbreviation="" id="63A4CDC4-48B6-8BD8-F1E8-8E4FCBC81285" import_id="" description="" />
+   <glossaryWord name="abonnementId" plural="" abbreviation="" alt_abbreviation="" id="92244473-A246-4719-9EF4-F16BEF200445" import_id="" description="" />
+   <glossaryWord name="achternaam" plural="achternamen" abbreviation="" alt_abbreviation="" id="A5EFEDEA-336D-37F4-35AB-2EC80D5E89D3" import_id="583916A7-1C45-82E3-C47E-9FC6D928AB4A" description="" />
+   <glossaryWord name="beheerderId" plural="beheerderIds" abbreviation="" alt_abbreviation="" id="F0E95BB8-574A-C1A0-F8CF-7C9C42C4D0A6" import_id="FCDDF032-F459-FF35-6675-86C18DED0E2A" description="" />
+   <glossaryWord name="emailAdres" plural="emailAddressen" abbreviation="" alt_abbreviation="" id="B2A2E9D7-86FD-3A7B-4DE8-5325F4AA25F5" import_id="D1644D8C-F414-C2B1-8092-19601972D502" description="" />
+   <glossaryWord name="geslacht" plural="geslachten" abbreviation="" alt_abbreviation="" id="294140BF-3943-A6C8-6973-F441B268F7B5" import_id="CCC60BE3-32FC-4F7F-88CE-C42BDF3C6AF6" description="" />
+   <glossaryWord name="huisnummer" plural="huisnummers" abbreviation="" alt_abbreviation="" id="A10A1E81-13A7-9657-3E2B-D4AC1524ADA0" import_id="7DB62EE6-FAF2-F55D-4C0F-E7363BA2CA96" description="" />
+   <glossaryWord name="klasId" plural="klasIds" abbreviation="" alt_abbreviation="" id="3408EE01-2DCF-3AE3-837E-313C4FD9F0E0" import_id="705EF5D9-FC98-AC24-6CCF-41BA5C03D972" description="" />
+   <glossaryWord name="klasnummer" plural="klasnummers" abbreviation="" alt_abbreviation="" id="142196E2-1C9C-DA62-0F62-6D27309BD7B0" import_id="37065EFC-46FD-B4BA-2E9F-E6D9ACF24E3F" description="" />
+   <glossaryWord name="land" plural="landen" abbreviation="" alt_abbreviation="" id="BF96694F-1239-5565-9398-9F311912BB86" import_id="B4207A99-496F-9FC6-CEA7-5FF5CBCA07C2" description="" />
+   <glossaryWord name="landcode" plural="" abbreviation="" alt_abbreviation="" id="D61F0A7B-FDE8-8AC6-61F2-2993AD5516AB" import_id="" description="" />
+   <glossaryWord name="landid" plural="" abbreviation="" alt_abbreviation="" id="CB97338C-9B62-1066-17FF-1C82039B731F" import_id="" description="" />
+   <glossaryWord name="landnaam" plural="" abbreviation="" alt_abbreviation="" id="477EC34A-E7CF-214A-8FD3-64C8D22CB1EB" import_id="" description="" />
+   <glossaryWord name="leerjaar" plural="leerjaren" abbreviation="" alt_abbreviation="" id="8F79BF10-8ABF-F9F3-1127-4AF4DE5ED6AC" import_id="6800013E-FECD-0F0A-F50A-64185AA57CC0" description="" />
+   <glossaryWord name="leerlingId" plural="leerlingIds" abbreviation="" alt_abbreviation="" id="974AC471-6EA9-F788-D79D-80D63D6F334F" import_id="D0B20FE4-F955-F991-6C13-83B0A5418B1C" description="" />
+   <glossaryWord name="naam" plural="namen" abbreviation="" alt_abbreviation="" id="12F3F6AE-B14B-45DB-F93D-55C4E42DD32F" import_id="97257C95-ABBE-CAAF-A408-3BD8083360D2" description="" />
+   <glossaryWord name="postcode" plural="postcodes" abbreviation="" alt_abbreviation="" id="A1514729-A892-0A88-5233-4E5632E42FA5" import_id="A1339313-B482-86CC-DBCB-2C0C506BE2C5" description="" />
+   <glossaryWord name="prijsPerMaand" plural="" abbreviation="" alt_abbreviation="" id="AE6B98EC-81D7-8C23-8C98-6A3B90069A17" import_id="" description="" />
+   <glossaryWord name="schoolId" plural="schoolIds" abbreviation="" alt_abbreviation="" id="5F75115A-AEE9-D480-1B8D-5705536C9A4E" import_id="194BE1B8-73E6-55B2-6697-64CDC7E3D5D4" description="" />
+   <glossaryWord name="straat" plural="straten" abbreviation="" alt_abbreviation="" id="0BD47C95-7469-AC1B-F1BD-6E838CF4B414" import_id="834ECDC6-A2EF-DBAD-1897-8A54C2BD64FE" description="" />
+   <glossaryWord name="supportSLA" plural="" abbreviation="" alt_abbreviation="" id="A52A8E50-FC82-B520-7472-DDEC8D0E7395" import_id="" description="" />
+   <glossaryWord name="voornaam" plural="voornamen" abbreviation="" alt_abbreviation="" id="3BE5F61C-164C-D910-920A-0A5979C44282" import_id="A298899A-4AC0-C09E-2D34-4C5926BDDC5C" description="" />
+   <glossaryWord name="wachtwoord" plural="wachtwoorden" abbreviation="" alt_abbreviation="" id="7541D012-83CF-7B03-2288-B4E1873EA358" import_id="73C6744C-9C73-E5ED-34DF-FA448D82ED06" description="" />
+   <glossaryWord name="SchoolBeheerders" plural="SchoolBeheerders" abbreviation="" alt_abbreviation="" id="352080D2-B709-0330-99E2-971E5E373BE4" import_id="" description="" />
 
 </cwd_glossary>
