@@ -10,8 +10,10 @@ Milestone 3: Creatie Databank
     - beheerders: beheerderid
     - klassen: klasid
     - leerlingen: leerlingid
+    - landen: landid
 - other:
     - none
+
 
       Table Counts
 
@@ -48,28 +50,29 @@ Milestone 3: Creatie Databank
 
     @query 3: School addressen
 
-    SELECT
-        s.NAAM as schoolnaam,
-        s.STRAAT as straat,
-        s.HUISNUMMER as huisnummer,
-        g.POSTCODE as postcode,
-        g.GEMEENTE as gemeente
+    SELECT s.NAAM       as schoolnaam,
+       s.STRAAT     as straat,
+       s.HUISNUMMER as huisnummer,
+       g.POSTCODE   as postcode,
+       g.GEMEENTE   as gemeente,
+       l.LANDNAAM   as land
     FROM SCHOLEN S
-    JOIN GEMEENTES G on s.GEMEENTES_POSTCODE = G.POSTCODE;
+      JOIN GEMEENTES G on s.GEMEENTES_POSTCODE = G.POSTCODE
+      JOIN LANDEN L on g.LANDEN_LANDID = l.LANDID;
 
 --- 
 ![query 3: School addressen](./screenshots/school_addressen.png)
-  
+
 
 Bewijs Domeinen - constraints M2
 --- 
 
-    Beheerder: Geslacht - M,v of x
+    Beheerder: Geslacht - M,V of X
 
 ---
 ![Bewijs beheerder geslacht](./screenshots/bewijs_beheerder_geslacht.png)
 
-    Leerling: Geslacht - M,v of x
+    Leerling: Geslacht - M,V of X
 
 ---
 ![Bewijs leerling geslacht](./screenshots/bewijs_leerling_geslacht.png)

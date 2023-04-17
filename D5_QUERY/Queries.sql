@@ -37,11 +37,12 @@ from SCHOLEN s
          join LEERLINGEN L on K.KLASID = L.KLASSEN_KLASID;
 
 -- Show full school address
-SELECT
-    s.NAAM as schoolnaam,
-    s.STRAAT as straat,
-    s.HUISNUMMER as huisnummer,
-    g.POSTCODE as postcode,
-    g.GEMEENTE as gemeente
+SELECT s.NAAM       as schoolnaam,
+       s.STRAAT     as straat,
+       s.HUISNUMMER as huisnummer,
+       g.POSTCODE   as postcode,
+       g.GEMEENTE   as gemeente,
+       l.LANDNAAM   as land
 FROM SCHOLEN S
-         join GEMEENTES G on s.GEMEENTES_POSTCODE = G.POSTCODE;
+        JOIN GEMEENTES G on s.GEMEENTES_POSTCODE = G.POSTCODE
+        JOIN LANDEN L on g.LANDEN_LANDID = l.LANDID;

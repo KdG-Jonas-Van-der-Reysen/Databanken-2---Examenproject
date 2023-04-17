@@ -1,15 +1,19 @@
+-- Landen
+INSERT INTO landen(landcode, landnaam)
+VALUES ('be', 'België');
+
 -- Gemeentes
-INSERT INTO GEMEENTES (POSTCODE, GEMEENTE)
-VALUES (2990, 'Wuustwezel');
+INSERT INTO GEMEENTES (POSTCODE, GEMEENTE, LANDEN_LANDID)
+VALUES (2990, 'Wuustwezel', (SELECT landid from landen where LANDNAAM = 'België'));
 
-INSERT INTO GEMEENTES (POSTCODE, GEMEENTE)
-VALUES (2960, 'Brecht');
+INSERT INTO GEMEENTES (POSTCODE, GEMEENTE, LANDEN_LANDID)
+VALUES (2960, 'Brecht', (SELECT landid from landen where LANDNAAM = 'België'));
 
-INSERT INTO GEMEENTES (POSTCODE, GEMEENTE)
-VALUES (2920, 'Kalmthout');
+INSERT INTO GEMEENTES (POSTCODE, GEMEENTE, LANDEN_LANDID)
+VALUES (2920, 'Kalmthout', (SELECT landid from landen where LANDNAAM = 'België'));
 
-INSERT INTO GEMEENTES (POSTCODE, GEMEENTE)
-VALUES (2910, 'Essen');
+INSERT INTO GEMEENTES (POSTCODE, GEMEENTE, LANDEN_LANDID)
+VALUES (2910, 'Essen', (SELECT landid from landen where LANDNAAM = 'België'));
 
 -- Scholen
 INSERT INTO SCHOLEN (NAAM, STRAAT, HUISNUMMER, GEMEENTES_POSTCODE)
@@ -111,40 +115,53 @@ INSERT INTO LEERLINGEN (KLASSEN_KLASID, VOORNAAM, ACHTERNAAM, GESLACHT, KLASNUMM
 VALUES ((select KLASID
          from KLASSEN
          where NAAM = '1B'
-           and SCHOLEN_SCHOOLID = (select SCHOOLID from SCHOLEN where NAAM = 'GBS t Blokje')), 'Sofie', 'Peeters', 'V', 2);
+           and SCHOLEN_SCHOOLID = (select SCHOOLID from SCHOLEN where NAAM = 'GBS t Blokje')), 'Sofie', 'Peeters', 'V',
+        2);
 
 INSERT INTO LEERLINGEN (KLASSEN_KLASID, VOORNAAM, ACHTERNAAM, GESLACHT, KLASNUMMER)
 VALUES ((select KLASID
          from KLASSEN
          where NAAM = '2B'
-           and SCHOLEN_SCHOOLID = (select SCHOOLID from SCHOLEN where NAAM = 'GBS t Blokje')), 'Tom', 'Vermeulen', 'M', 3);
+           and SCHOLEN_SCHOOLID = (select SCHOOLID from SCHOLEN where NAAM = 'GBS t Blokje')), 'Tom', 'Vermeulen', 'M',
+        3);
 
 INSERT INTO LEERLINGEN (KLASSEN_KLASID, VOORNAAM, ACHTERNAAM, GESLACHT, KLASNUMMER)
 VALUES ((select KLASID
          from KLASSEN
          where NAAM = '1A'
-           and SCHOLEN_SCHOOLID = (select SCHOOLID from SCHOLEN where NAAM = 'GBS t Blokje')), 'Lisa', 'De Smet', 'V', 4);
+           and SCHOLEN_SCHOOLID = (select SCHOOLID from SCHOLEN where NAAM = 'GBS t Blokje')), 'Lisa', 'De Smet', 'V',
+        4);
 
 INSERT INTO LEERLINGEN (KLASSEN_KLASID, VOORNAAM, ACHTERNAAM, GESLACHT, KLASNUMMER)
 VALUES ((select KLASID
          from KLASSEN
          where NAAM = '1A'
-           and SCHOLEN_SCHOOLID = (select SCHOOLID from SCHOLEN where NAAM = 'Basisschool int groen')), 'Bart', 'Van Damme', 'M', 5);
+           and SCHOLEN_SCHOOLID = (select SCHOOLID from SCHOLEN where NAAM = 'Basisschool int groen')), 'Bart',
+        'Van Damme', 'M', 5);
 
 INSERT INTO LEERLINGEN (KLASSEN_KLASID, VOORNAAM, ACHTERNAAM, GESLACHT, KLASNUMMER)
 VALUES ((select KLASID
          from KLASSEN
          where NAAM = '1A'
-           and SCHOLEN_SCHOOLID = (select SCHOOLID from SCHOLEN where NAAM = 'Basisschool int groen')), 'Bert', 'Van Sesamstraat', 'M', 6);
+           and SCHOLEN_SCHOOLID = (select SCHOOLID from SCHOLEN where NAAM = 'Basisschool int groen')), 'Bert',
+        'Van Sesamstraat', 'M', 6);
 
 INSERT INTO LEERLINGEN (KLASSEN_KLASID, VOORNAAM, ACHTERNAAM, GESLACHT, KLASNUMMER)
 VALUES ((select KLASID
          from KLASSEN
          where NAAM = '2A'
-           and SCHOLEN_SCHOOLID = (select SCHOOLID from SCHOLEN where NAAM = 'Basisschool int groen')), 'Bert', 'Van Sesamstraat', 'M', 6);
+           and SCHOLEN_SCHOOLID = (select SCHOOLID from SCHOLEN where NAAM = 'Basisschool int groen')), 'Bert',
+        'Van Sesamstraat', 'M', 6);
 
 INSERT INTO LEERLINGEN (KLASSEN_KLASID, VOORNAAM, ACHTERNAAM, GESLACHT, KLASNUMMER)
 VALUES ((select KLASID
          from KLASSEN
          where NAAM = '2A'
-           and SCHOLEN_SCHOOLID = (select SCHOOLID from SCHOLEN where NAAM = 'Basisschool int groen')), 'Ernie', 'Van de Banaan', 'M', 7);
+           and SCHOLEN_SCHOOLID = (select SCHOOLID from SCHOLEN where NAAM = 'Basisschool int groen')), 'Ernie',
+        'Van de Banaan', 'M', 7);
+
+
+SELECT *
+FROM (SELECT t.*
+      FROM PROJECT.BEHEERDERS t)
+WHERE ROWNUM <= 501
