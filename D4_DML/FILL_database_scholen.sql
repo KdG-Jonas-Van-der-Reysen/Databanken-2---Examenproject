@@ -150,18 +150,5 @@ INSERT INTO LEERLINGEN (KLASSEN_KLASID, VOORNAAM, ACHTERNAAM, GESLACHT, KLASNUMM
 VALUES ((select KLASID
          from KLASSEN
          where NAAM = '2A'
-           and SCHOLEN_SCHOOLID = (select SCHOOLID from SCHOLEN where NAAM = 'Basisschool int groen')), 'Bert',
-        'Van Sesamstraat', 'M', 6);
-
-INSERT INTO LEERLINGEN (KLASSEN_KLASID, VOORNAAM, ACHTERNAAM, GESLACHT, KLASNUMMER)
-VALUES ((select KLASID
-         from KLASSEN
-         where NAAM = '2A'
            and SCHOLEN_SCHOOLID = (select SCHOOLID from SCHOLEN where NAAM = 'Basisschool int groen')), 'Ernie',
         'Van de Banaan', 'M', 7);
-
-
-SELECT *
-FROM (SELECT t.*
-      FROM PROJECT.BEHEERDERS t)
-WHERE ROWNUM <= 501
