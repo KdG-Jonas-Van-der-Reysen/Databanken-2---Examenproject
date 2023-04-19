@@ -1,6 +1,18 @@
-CREATE
-    OR REPLACE PACKAGE BODY pkg_scholen AS
+
+CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
     -- Private helper (mostly lookup) functions
+    FUNCTION lookup_abonnement(p_abonnement IN varchar2) RETURN NUMBER IS
+        v_abonnementid abonnementen.abonnementid % TYPE;
+    BEGIN
+        SELECT abonnementid
+        INTO v_abonnementid
+        FROM abonnementen
+        WHERE LOWER(naam) = LOWER(p_abonnement);
+
+        return v_abonnementid;
+
+    END lookup_abonnement;
+
     FUNCTION lookup_land(p_land IN varchar2) RETURN NUMBER IS
         v_landid landen.landid % TYPE;
 
@@ -55,7 +67,7 @@ CREATE
 
     FUNCTION lookup_klas(p_klasnaam IN VARCHAR2, p_schoolnaam IN VARCHAR2)
         RETURN NUMBER IS
-        v_klasid klassen.klasid % TYPE;
+        v_klasid   klassen.klasid % TYPE;
         v_schoolid scholen.schoolid % TYPE;
     BEGIN
         v_schoolid := lookup_school(p_schoolnaam);
@@ -69,21 +81,26 @@ CREATE
         RETURN v_klasid;
     END lookup_klas;
 
-
 -- Public procedures & functions
     PROCEDURE empty_tables IS
     BEGIN
+        -- Clear data
         EXECUTE IMMEDIATE 'truncate TABLE leerlingen';
-
         EXECUTE IMMEDIATE 'truncate TABLE klassen';
-
         EXECUTE IMMEDIATE 'truncate TABLE schoolbeheerders';
-
         EXECUTE IMMEDIATE 'truncate TABLE beheerders';
-
         EXECUTE IMMEDIATE 'truncate TABLE scholen';
-
+        EXECUTE IMMEDIATE 'truncate TABLE abonnementen';
         EXECUTE IMMEDIATE 'truncate TABLE gemeentes';
+        EXECUTE IMMEDIATE 'truncate TABLE landen';
+
+        -- Reset identity columns
+        EXECUTE IMMEDIATE 'ALTER TABLE beheerders MODIFY beheerderid GENERATED ALWAYS as identity (start with 1)';
+        EXECUTE IMMEDIATE 'ALTER TABLE landen MODIFY landid GENERATED ALWAYS as identity (start with 1)';
+        EXECUTE IMMEDIATE 'ALTER TABLE klassen MODIFY klasid GENERATED ALWAYS as identity (start with 1)';
+        EXECUTE IMMEDIATE 'ALTER TABLE leerlingen MODIFY leerlingid GENERATED ALWAYS as identity (start with 1)';
+        EXECUTE IMMEDIATE 'ALTER TABLE scholen MODIFY schoolid GENERATED ALWAYS as identity (start with 1)';
+        EXECUTE IMMEDIATE 'ALTER TABLE abonnementen MODIFY abonnementid GENERATED ALWAYS as identity (start with 1)';
 
         DBMS_OUTPUT.PUT_LINE('De tabellen zijn leeggemaakt');
 
@@ -124,41 +141,48 @@ CREATE
 
     END add_gemeente;
 
--- Add school met postcode
+-- Add school met postcode en abonnementid
     PROCEDURE add_school(
         p_naam IN VARCHAR2,
         p_straat IN VARCHAR2,
         p_huisnummer IN VARCHAR2,
-        p_gemeentes_postcode IN NUMBER
-    ) IS
+        p_gemeentes_postcode IN NUMBER,
+        p_abonnementId IN NUMBER
+    )
+        IS
     BEGIN
-        INSERT INTO SCHOLEN (NAAM, STRAAT, HUISNUMMER, GEMEENTES_POSTCODE)
+        INSERT INTO SCHOLEN (NAAM, STRAAT, HUISNUMMER, GEMEENTES_POSTCODE, ABONNEMENTEN_ABONNEMENTID)
         VALUES (p_naam,
                 p_straat,
                 p_huisnummer,
-                p_gemeentes_postcode);
+                p_gemeentes_postcode,
+                p_abonnementId);
 
     END add_school;
 
--- Add school met gemeente naam
-    PROCEDURE add_school(
+-- Add school met gemeente naam en abonnement naam
+    PROCEDURE add_school_strings(
         p_naam IN VARCHAR2,
         p_straat IN VARCHAR2,
         p_huisnummer IN VARCHAR2,
-        p_gemeente IN VARCHAR2
+        p_gemeente IN VARCHAR2,
+        p_abonnement IN VARCHAR2
     ) IS
         v_gemeentes_postcode gemeentes.postcode % TYPE;
+        v_abonnement         abonnementen.abonnementId%TYPE;
 
     BEGIN
         v_gemeentes_postcode := lookup_gemeente(p_gemeente);
+        v_abonnement := lookup_abonnement(p_abonnement);
         add_school(
                 p_naam,
                 p_straat,
                 p_huisnummer,
-                v_gemeentes_postcode
+                v_gemeentes_postcode,
+                v_abonnement
             );
 
-    END add_school;
+    END add_school_strings;
 
 -- Add beheerder
     PROCEDURE add_beheerder(
@@ -264,5 +288,15 @@ CREATE
         add_leerling(v_klasid, p_voornaam, p_achternaam, p_geslacht, p_klasnummer);
     END add_leerling;
 
+    -- Add abonnement
+    PROCEDURE add_abonnement(
+        p_naam IN VARCHAR2,
+        p_prijs IN NUMBER,
+        p_supportSLA IN NUMBER
+    ) IS
+    BEGIN
+        INSERT INTO ABONNEMENTEN (NAAM, PRIJSPERMAAND, SUPPORTSLA)
+        VALUES (p_naam, p_prijs, p_supportSLA);
+    END add_abonnement;
 
 END pkg_scholen;

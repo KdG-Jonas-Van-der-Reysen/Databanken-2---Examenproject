@@ -3,10 +3,9 @@ DROP TABLE klassen;
 DROP TABLE schoolbeheerders;
 DROP TABLE beheerders;
 DROP TABLE scholen;
+DROP TABLE abonnementen;
 DROP TABLE gemeentes;
 DROP TABLE landen;
-
-
 
 CREATE TABLE beheerders
 (
@@ -56,11 +55,12 @@ CREATE TABLE leerlingen
 
 CREATE TABLE scholen
 (
-    schoolid           NUMBER(6) GENERATED ALWAYS AS IDENTITY (start with 1 increment by 1) NOT NULL PRIMARY KEY,
-    naam               VARCHAR2(25 BYTE),
-    straat             VARCHAR2(20 BYTE),
-    huisnummer         VARCHAR2(6 BYTE),
-    gemeentes_postcode VARCHAR2(6)                                                          NOT NULL
+    schoolid                  NUMBER(6) GENERATED ALWAYS AS IDENTITY (start with 1 increment by 1) NOT NULL PRIMARY KEY,
+    naam                      VARCHAR2(25 BYTE),
+    straat                    VARCHAR2(20 BYTE),
+    huisnummer                VARCHAR2(6 BYTE),
+    gemeentes_postcode        VARCHAR2(6)                                                          NOT NULL,
+    abonnementen_abonnementId NUMBER(6)
 );
 
 CREATE TABLE schoolbeheerders
@@ -68,6 +68,14 @@ CREATE TABLE schoolbeheerders
     scholen_schoolid       NUMBER(6) NOT NULL,
     beheerders_beheerderid NUMBER(6) NOT NULL,
     CONSTRAINT schoolbeheerders_pk PRIMARY KEY (scholen_schoolid, beheerders_beheerderid)
+);
+
+CREATE TABLE abonnementen
+(
+    abonnementid  NUMBER(6) GENERATED ALWAYS AS IDENTITY (start with 1 increment by 1) NOT NULL PRIMARY KEY,
+    naam          VARCHAR2(25 BYTE),
+    prijsPerMaand NUMBER(6, 2)                                                         NOT NULL,
+    supportSLA    NUMBER(6)
 );
 
 ALTER TABLE klassen
@@ -80,7 +88,9 @@ ALTER TABLE leerlingen
 
 ALTER TABLE scholen
     ADD CONSTRAINT scholen_gemeentes_fk FOREIGN KEY (gemeentes_postcode)
-        REFERENCES gemeentes (postcode);
+        REFERENCES gemeentes (postcode)
+    ADD CONSTRAINT abonnementen_scholen_fk FOREIGN KEY (abonnementen_abonnementId)
+        REFERENCES abonnementen (abonnementId);
 
 ALTER TABLE gemeentes
     ADD CONSTRAINT gemeentes_landen_fk FOREIGN KEY (landen_landid)

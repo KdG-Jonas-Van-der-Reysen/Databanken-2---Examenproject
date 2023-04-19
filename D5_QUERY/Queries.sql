@@ -5,6 +5,9 @@ UNION ALL
 SELECT 'gemeentes' AS tabel, COUNT(*)
 FROM gemeentes
 UNION ALL
+SELECT 'landen' AS tabel, COUNT(*)
+FROM landen
+UNION ALL
 SELECT 'klassen' AS tabel, COUNT(*)
 FROM klassen
 UNION ALL
@@ -15,7 +18,10 @@ SELECT 'scholen' AS tabel, COUNT(*)
 FROM scholen
 UNION ALL
 SELECT 'schoolbeheerders' AS tabel, COUNT(*)
-FROM schoolbeheerders;
+FROM schoolbeheerders
+UNION ALL
+SELECT 'abonnementen' AS tabel, COUNT(*)
+FROM abonnementen;
 
 -- Show many-to-many relationship
 SELECT b.VOORNAAM,
