@@ -85,5 +85,8 @@ AS
     -- Bewijs milestone 5
     PROCEDURE bewijs_milestone_5;
 
+    -- Optellen gegeven tabel Z voor rij uit tabel X
+    PROCEDURE calculate_pupils_of_gender_in_school(p_school_name scholen.naam%TYPE, p_gender leerlingen.geslacht%TYPE);
+
 END pkg_scholen;
 

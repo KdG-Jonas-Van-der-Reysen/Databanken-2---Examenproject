@@ -755,7 +755,7 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
 
     END generateClassesForEachSchool;
 
-    PROCEDURE generatePupilsForEachClassv2(amount_of_pupils NUMBER)
+    PROCEDURE generatePupilsForEachClass(p_amount_of_pupils NUMBER)
         IS
 
         -- Declare a collection of classes
@@ -770,10 +770,10 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
             IS TABLE OF leerlingen%ROWTYPE;
 
         -- Declare a variable of the collection
-        t_pupils type_coll_pupils := type_coll_pupils();
+        t_pupils  type_coll_pupils := type_coll_pupils();
 
     BEGIN
-        print('5.3 generatePupilsForEachClass(' || amount_of_pupils || ')');
+        print('5.3 generatePupilsForEachClass(' || p_amount_of_pupils || ')');
 
         -- Start by getting all classes
         SELECT * BULK COLLECT INTO t_classes FROM klassen;
@@ -782,7 +782,7 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         FOR classIndex IN 1 .. t_classes.COUNT
             LOOP
                 -- Generate classes
-                FOR pupilIndex IN 1 .. amount_of_pupils
+                FOR pupilIndex IN 1 .. p_amount_of_pupils
                     LOOP
                         t_pupils.extend;
                         t_pupils(t_pupils.last).voornaam := random_first_name();
@@ -802,63 +802,8 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
                     t_pupils(i).geslacht,
                     t_pupils(i).klasnummer);
 
-        print('  generatePupilsForEachClass(' || amount_of_pupils || ') generated ' || SQL%ROWCOUNT ||
+        print('  generatePupilsForEachClass(' || p_amount_of_pupils || ') generated ' || SQL%ROWCOUNT ||
               ' pupils');
-
-    END generatePupilsForEachClassv2;
-    PROCEDURE generatePupilsForEachClass(p_amount_of_pupils NUMBER)
-        IS
-        -- Declare a collection of pupils
-        TYPE type_coll_leerlingen
-            IS TABLE OF leerlingen%ROWTYPE;
-
-        -- Declare a variable of the collection
-        t_leerlingen type_coll_leerlingen := type_coll_leerlingen();
-
-        -- Declare a collection of classes
-        TYPE type_coll_classes
-            IS TABLE OF klassen%ROWTYPE;
-
-        -- Declare a variable of the collection
-        t_klassen    type_coll_classes    := type_coll_classes();
-    BEGIN
-        print('5.3 generatePupilsForEachClass(' || p_amount_of_pupils || ')');
-        -- Get all classes
-        SELECT * BULK COLLECT
-        INTO t_klassen
-        FROM klassen;
-
-        -- Loop over klassen
-        FOR i IN 1 .. t_klassen.COUNT
-            LOOP
-                -- Generate classes
-                FOR j IN 1 .. p_amount_of_pupils
-                    LOOP
-                        t_leerlingen.extend;
-                        t_leerlingen(j).voornaam := random_first_name();
-                        t_leerlingen(j).achternaam := random_last_name();
-                        t_leerlingen(j).geslacht := random_geslacht();
-                        t_leerlingen(j).klasnummer := random_number(1, 40);
-                        t_leerlingen(j).klassen_klasid := t_klassen(i).klasid;
-                    END LOOP;
-            END LOOP;
-
-        -- Insert classes
-        /*FORALL i IN INDICES OF t_leerlingen
-            INSERT INTO leerlingen
-            VALUES t_leerlingen(i);*/
-
-        -- Insert classes
-        FORALL i IN INDICES OF t_leerlingen
-            INSERT INTO leerlingen (KLASSEN_KLASID, VOORNAAM, ACHTERNAAM, GESLACHT, KLASNUMMER)
-            VALUES (t_leerlingen(i).klassen_klasid,
-                    t_leerlingen(i).voornaam,
-                    t_leerlingen(i).achternaam,
-                    t_leerlingen(i).geslacht,
-                    t_leerlingen(i).klasnummer);
-
-        print('  generatePupilsForEachClass(' || p_amount_of_pupils || ') generated ' ||
-              SQL%ROWCOUNT || ' pupils');
 
     END generatePupilsForEachClass;
 
@@ -877,7 +822,7 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
 
         print('5.1 We already have ' || v_amount_of_schools || ' schools --> Skip schools');
         generateClassesForEachSchool(p_amount_of_classes);
-        generatePupilsForEachClassv2(p_amount_of_pupils);
+        generatePupilsForEachClass(p_amount_of_pupils);
         v_generation_end_time := DBMS_UTILITY.get_time();
 
         print('The duration of generate_2_levels was: ' || (v_generation_end_time - v_generation_start_time) ||
@@ -911,4 +856,50 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         COMMIT;
     END bewijs_milestone_5;
 
+    PROCEDURE calculate_pupils_of_gender_in_school(p_school_name scholen.naam%TYPE, p_gender leerlingen.geslacht%TYPE)
+        IS
+        -- School to calculate for
+        v_school         scholen.schoolid%TYPE;
+
+        -- School's classes
+        TYPE type_coll_classes
+            IS TABLE OF klassen.klasid%TYPE;
+
+        -- Declare a variable of the collection
+        t_classes        type_coll_classes;
+
+        -- Counting variables
+        v_n_gender       NUMBER := 0;
+        v_n_gender_class NUMBER;
+    BEGIN
+        -- First, get the school
+        SELECT schoolid
+        INTO v_school
+        FROM scholen
+        WHERE naam = p_school_name;
+
+        print('School: ' || v_school);
+
+        -- Now, get the classes
+        SELECT klasid BULK COLLECT
+        INTO t_classes
+        FROM klassen
+        WHERE scholen_schoolid = v_school;
+
+        print('Classes: ' || t_classes.COUNT);
+
+        -- Finally, loop through each class and calculate the pupils that are male
+        FOR i IN 1 .. t_classes.COUNT
+            LOOP
+                select count(geslacht)
+                INTO v_n_gender_class
+                FROM LEERLINGEN
+                WHERE geslacht = p_gender AND klassen_klasid = t_classes(i);
+
+                v_n_gender := v_n_gender + v_n_gender_class;
+            END LOOP;
+
+        print('Er zijn ' || v_n_gender || ' mensen met het gender ' || p_gender || ' op school ' || v_school);
+
+    END calculate_pupils_of_gender_in_school;
 END pkg_scholen;

@@ -122,7 +122,6 @@ BEGIN
     pkg_scholen.BEWIJS_MILESTONE_5();
     COMMIT;
 end;
-
 BEGIN
-    select * from scholen;
+    pkg_scholen.CALCULATE_PUPILS_OF_GENDER_IN_SCHOOL('School 20', 'V');
 end;
