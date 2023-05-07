@@ -67,7 +67,7 @@ AS
     -- Multiple row generation many-to-many
     PROCEDURE generateSchools(p_amount IN NUMBER);
     PROCEDURE generateBeheerders(p_amount NUMBER);
-    PROCEDURE generateRandomSchoolBeheerder(p_amount NUMBER);
+    PROCEDURE generateRandomSchoolBeheerders(p_amount NUMBER);
     PROCEDURE genereer_veel_op_veel(
         p_amount_schools NUMBER,
         p_amount_beheerders NUMBER,
@@ -78,7 +78,6 @@ AS
     PROCEDURE generateClassesForEachSchool(p_amount_of_classes NUMBER);
     PROCEDURE generatePupilsForEachClass(p_amount_of_pupils NUMBER);
     PROCEDURE generate_2_levels(
-        p_amount_of_schools NUMBER,
         p_amount_of_classes NUMBER,
         p_amount_of_pupils NUMBER
     );

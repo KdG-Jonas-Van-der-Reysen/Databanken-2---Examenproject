@@ -1,12 +1,13 @@
 BEGIN
     pkg_scholen.empty_tables();
+    COMMIT;
 END;
 BEGIN
 
     -- Landen
     pkg_scholen.add_land('be', 'België');
 
-    -- Abonnemente
+    -- Abonnementen
     pkg_scholen.add_abonnement('Standaard', 10.00, 40);
     pkg_scholen.add_abonnement('Premium', 20.00, 24);
     pkg_scholen.add_abonnement('Platinum', 50.00, 8);
@@ -87,5 +88,41 @@ BEGIN
 END;
 
 BEGIN
+    pkg_scholen.empty_tables();
+END;
+BEGIN
+    pkg_scholen.empty_tables();
+
+    -- Landen
+    pkg_scholen.add_land('be', 'België');
+
+    -- Abonnementen
+    pkg_scholen.add_abonnement('Standaard', 10.00, 40);
+    pkg_scholen.add_abonnement('Premium', 20.00, 24);
+    pkg_scholen.add_abonnement('Platinum', 50.00, 8);
+
+    -- Gemeentes
+    /*INSERT INTO GEMEENTES (POSTCODE, GEMEENTE, LANDEN_LANDID)
+    VALUES (2990, 'Wuustwezel', (SELECT landid from landen where LANDNAAM = 'België'));*/
+    pkg_scholen.add_gemeente(2990, 'Wuustwezel', 'België');
+
+    /*INSERT INTO GEMEENTES (POSTCODE, GEMEENTE, LANDEN_LANDID)
+    VALUES (2960, 'Brecht', (SELECT landid from landen where LANDNAAM = 'België'));*/
+    pkg_scholen.add_gemeente(2960, 'Brecht', 'België');
+
+
+    /*INSERT INTO GEMEENTES (POSTCODE, GEMEENTE, LANDEN_LANDID)
+    VALUES (2920, 'Kalmthout', (SELECT landid from landen where LANDNAAM = 'België'));*/
+    pkg_scholen.add_gemeente(2920, 'Kalmthout', 'België');
+
+    /*INSERT INTO GEMEENTES (POSTCODE, GEMEENTE, LANDEN_LANDID)
+    VALUES (2910, 'Essen', (SELECT landid from landen where LANDNAAM = 'België'));*/
+    pkg_scholen.add_gemeente(2910, 'Essen', 'België');
+
     pkg_scholen.BEWIJS_MILESTONE_5();
+    COMMIT;
+end;
+
+BEGIN
+    select * from scholen;
 end;

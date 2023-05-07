@@ -1,10 +1,10 @@
 CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
     -- Private helper (mostly lookup) functions
     PROCEDURE print(p_string IN VARCHAR2)
-    IS
+        IS
         v_timestamp VARCHAR2(22);
     BEGIN
-        v_timestamp := '[' || TO_CHAR (SYSDATE,'yyyy-mm-dd hh24:mi:ss') || '] ';
+        v_timestamp := '[' || TO_CHAR(SYSDATE, 'yyyy-mm-dd hh24:mi:ss') || '] ';
         -- Print timestamp
         DBMS_OUTPUT.PUT_LINE(v_timestamp || p_string);
     END print;
@@ -248,12 +248,17 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         TYPE type_tab_postalcode IS TABLE OF
             gemeentes.postcode%TYPE
             INDEX BY PLS_INTEGER;
-        t_postalcode type_tab_postalcode;
-        v_postalcode gemeentes.postcode%TYPE;
+        t_postalcode   type_tab_postalcode;
+        v_postalcode   gemeentes.postcode%TYPE;
+        v_random_index NUMBER;
     BEGIN
         SELECT postcode BULK COLLECT
         INTO t_postalcode
         FROM gemeentes;
+
+        if t_postalcode.COUNT = 0 then
+            print('No postal codes found in the database');
+        end if;
 
         v_postalcode := t_postalcode(random_number(1, t_postalcode.COUNT));
         RETURN v_postalcode;
@@ -266,14 +271,17 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         TYPE type_tab_schoolid IS TABLE OF
             scholen.schoolid%TYPE
             INDEX BY PLS_INTEGER;
-        t_schoolid type_tab_schoolid;
-        v_schoolid scholen.schoolid%TYPE;
+        t_schoolid     type_tab_schoolid;
+        v_schoolid     scholen.schoolid%TYPE;
+        v_random_index NUMBER;
     BEGIN
-        SELECT schoolid BULK COLLECT
+        SELECT scholen.SCHOOLID BULK COLLECT
         INTO t_schoolid
         FROM scholen;
 
-        v_schoolid := t_schoolid(random_number(1, t_schoolid.COUNT));
+        v_random_index := random_number(1, t_schoolid.COUNT);
+
+        v_schoolid := t_schoolid(v_random_index);
         RETURN v_schoolid;
     END random_school;
 
@@ -546,9 +554,11 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
             IS TABLE OF scholen%ROWTYPE;
 
         -- Declare a variable of the collection
-        t_scholen type_coll_school;
+        t_scholen type_coll_school := type_coll_school();
     BEGIN
+        print('4.1 generateSchools(' || p_amount || ')');
         -- Generate schools
+        t_scholen.extend(p_amount);
         FOR i IN 1 .. p_amount
             LOOP
                 t_scholen(i).naam := 'School ' || i;
@@ -559,9 +569,20 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
             END LOOP;
 
         -- Insert schools
-        FORALL i IN INDICES OF t_scholen
+        /*FORALL i IN INDICES OF t_scholen
             INSERT INTO scholen
-            VALUES t_scholen(i);
+            VALUES t_scholen(i);*/
+
+        -- Insert schools
+        FORALL i IN INDICES OF t_scholen
+            INSERT INTO scholen (NAAM, STRAAT, HUISNUMMER, GEMEENTES_POSTCODE, ABONNEMENTEN_ABONNEMENTID)
+            VALUES (t_scholen(i).naam,
+                    t_scholen(i).straat,
+                    t_scholen(i).huisnummer,
+                    t_scholen(i).gemeentes_postcode,
+                    t_scholen(i).abonnementen_abonnementid);
+
+        print('  generateSchools(' || p_amount || ') generated ' || SQL%ROWCOUNT || ' schools');
     END generateSchools;
 
     -- Generate beheerders
@@ -574,11 +595,13 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
             IS TABLE OF beheerders%ROWTYPE;
 
         -- Declare a variable of the collection
-        t_beheerders type_coll_beheerder;
+        t_beheerders type_coll_beheerder := type_coll_beheerder();
         v_firstName  beheerders.voornaam%TYPE;
         v_lastName   beheerders.achternaam%TYPE;
     BEGIN
+        print('4.2 generateBeheerders(' || p_amount || ')');
         -- Generate beheerders
+        t_beheerders.extend(p_amount);
         FOR i IN 1 .. p_amount
             LOOP
                 v_firstName := random_first_name();
@@ -591,82 +614,198 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
             END LOOP;
 
         -- Insert beheerders
-        FORALL i IN INDICES OF t_beheerders
+        /*FORALL i IN INDICES OF t_beheerders
             INSERT INTO beheerders
-            VALUES t_beheerders(i);
+            VALUES t_beheerders(i);*/
+
+        -- Insert beheerders
+        FORALL i IN INDICES OF t_beheerders
+            INSERT INTO beheerders (VOORNAAM, ACHTERNAAM, EMAILADRES, WACHTWOORD, GESLACHT)
+            VALUES (t_beheerders(i).voornaam,
+                    t_beheerders(i).achternaam,
+                    t_beheerders(i).emailadres,
+                    t_beheerders(i).wachtwoord,
+                    t_beheerders(i).geslacht);
+
+        print('  generateBeheerders(' || p_amount || ') generated ' || SQL%ROWCOUNT || ' beheerders');
     END generateBeheerders;
 
     -- Generate schoolbeheerders
-    PROCEDURE generateRandomSchoolBeheerder(p_amount NUMBER)
+    PROCEDURE generateRandomSchoolBeheerders(p_amount NUMBER)
         IS
         -- Declare a collection of schoolbeheerders
         TYPE type_coll_schoolbeheerder
             IS TABLE OF schoolbeheerders%ROWTYPE;
 
         -- Declare a variable of the collection
-        t_schoolbeheerders type_coll_schoolbeheerder;
+        t_schoolbeheerders       type_coll_schoolbeheerder := type_coll_schoolbeheerder();
+
+        -- Declare helper variables
+        v_successfully_generated NUMBER                    := 0;
+        v_already_exists         BOOLEAN                   := FALSE;
+        v_beheerderid            beheerders.beheerderid%TYPE;
+        v_schoolid               scholen.schoolid%TYPE;
     BEGIN
+        print('4.3 generateRandomSchoolBeheerders(' || p_amount || ')');
+
         -- Generate schoolbeheerders
-        FOR i IN 1 .. p_amount
+        t_schoolbeheerders.extend(p_amount);
+
+        -- While v_successfully_generated < p_amount
+        WHILE v_successfully_generated < p_amount
             LOOP
-                t_schoolbeheerders(i).scholen_schoolid := random_school();
-                t_schoolbeheerders(i).beheerders_beheerderid := random_beheerder();
+                v_schoolid := random_school();
+                v_beheerderid := random_beheerder();
+
+                -- Check if schoolbeheerder already exists in the collection
+                v_already_exists := FALSE;
+                FOR i IN 1 .. t_schoolbeheerders.COUNT
+                    LOOP
+                        IF v_schoolid = t_schoolbeheerders(i).scholen_schoolid AND
+                           v_beheerderid = t_schoolbeheerders(i).beheerders_beheerderid
+                        THEN
+                            v_already_exists := TRUE;
+                        END IF;
+                    END LOOP;
+
+                -- If schoolbeheerder doesn't exist in the collection, add it
+                IF NOT v_already_exists
+                THEN
+                    t_schoolbeheerders(v_successfully_generated + 1).scholen_schoolid := v_schoolid;
+                    t_schoolbeheerders(v_successfully_generated + 1).beheerders_beheerderid := v_beheerderid;
+                    v_successfully_generated := v_successfully_generated + 1;
+                END IF;
             END LOOP;
 
         -- Insert schoolbeheerders
-        FORALL i IN INDICES OF t_schoolbeheerders
+        /*FORALL i IN INDICES OF t_schoolbeheerders
             INSERT INTO schoolbeheerders
-            VALUES t_schoolbeheerders(i);
-    END generateRandomSchoolBeheerder;
+            VALUES t_schoolbeheerders(i);*/
+
+        -- Insert schoolbeheerders
+        FORALL i IN INDICES OF t_schoolbeheerders
+            INSERT INTO schoolbeheerders (SCHOLEN_SCHOOLID, BEHEERDERS_BEHEERDERID)
+            VALUES (t_schoolbeheerders(i).scholen_schoolid, t_schoolbeheerders(i).beheerders_beheerderid);
+
+        print('  generateRandomSchoolBeheerders(' || p_amount || ') generated ' || SQL%ROWCOUNT ||
+              ' schoolBeheerders');
+    END generateRandomSchoolBeheerders;
 
     PROCEDURE genereer_veel_op_veel(p_amount_schools NUMBER, p_amount_beheerders NUMBER,
                                     p_amount_schoolBeheerders NUMBER)
         IS
+        v_start_generation_time  NUMBER;
+        v_finish_generation_time NUMBER;
     BEGIN
+        v_start_generation_time := DBMS_UTILITY.get_time();
         generateSchools(p_amount_schools);
         generateBeheerders(p_amount_beheerders);
-        generateRandomSchoolBeheerder(p_amount_schoolBeheerders);
+        generateRandomSchoolBeheerders(p_amount_schoolBeheerders);
+        v_finish_generation_time := DBMS_UTILITY.get_time();
+
+        print('The duration of genereer_veel_op_veel was: ' || (v_finish_generation_time - v_start_generation_time) ||
+              ' ms');
     END;
 
     PROCEDURE generateClassesForEachSchool(p_amount_of_classes NUMBER)
         IS
-        -- Declare a collection of classes
-        TYPE type_coll_klassen
-            IS TABLE OF klassen%ROWTYPE;
-
-        -- Declare a variable of the collection
-        t_klassen type_coll_klassen;
 
         -- Declare a collection of schools
-        TYPE type_coll_school
+        TYPE type_coll_schools
             IS TABLE OF scholen%ROWTYPE;
 
         -- Declare a variable of the collection
-        t_scholen type_coll_school;
-    BEGIN
-        -- Get all schools
-        SELECT * BULK COLLECT
-        INTO t_scholen
-        FROM scholen;
+        t_schools type_coll_schools;
 
-        -- Loop over schools
-        FOR i IN 1 .. t_scholen.COUNT
+        -- Declare a collection of classes
+        TYPE type_coll_classes
+            IS TABLE OF klassen%ROWTYPE;
+
+        -- Declare a variable of the collection
+        t_classes type_coll_classes := type_coll_classes();
+
+    BEGIN
+        print('5.2 generateClassesForEachSchool(' || p_amount_of_classes || ')');
+
+        -- Start by getting all schools
+        SELECT * BULK COLLECT INTO t_schools FROM scholen;
+
+        -- Now, loop through each school
+        FOR schoolIndex IN 1 .. t_schools.COUNT
             LOOP
                 -- Generate classes
-                FOR j IN 1 .. p_amount_of_classes
+                FOR classIndex IN 1 .. p_amount_of_classes
                     LOOP
-                        t_klassen(j).naam := 'Klas ' || j || '-S' || i;
-                        t_klassen(j).leerjaar := random_number(1, 6);
-                        t_klassen(j).scholen_schoolid := t_scholen(i).schoolid;
+                        t_classes.extend;
+                        t_classes(t_classes.last).naam := 'Klas ' || classIndex || '-S' || schoolIndex;
+                        t_classes(t_classes.last).leerjaar := random_number(1, 6);
+                        t_classes(t_classes.last).scholen_schoolid := t_schools(schoolIndex).schoolid;
                     END LOOP;
             END LOOP;
 
         -- Insert classes
-        FORALL i IN INDICES OF t_klassen
-            INSERT INTO klassen
-            VALUES t_klassen(i);
+        FORALL i IN INDICES OF t_classes
+            INSERT INTO klassen (SCHOLEN_SCHOOLID, NAAM, LEERJAAR)
+            VALUES (t_classes(i).scholen_schoolid,
+                    t_classes(i).naam,
+                    t_classes(i).leerjaar);
+
+        print('  generateClassesForEachSchool(' || p_amount_of_classes || ') generated ' || SQL%ROWCOUNT ||
+              ' classes');
+
     END generateClassesForEachSchool;
 
+    PROCEDURE generatePupilsForEachClassv2(amount_of_pupils NUMBER)
+        IS
+
+        -- Declare a collection of classes
+        TYPE type_coll_classes
+            IS TABLE OF klassen%ROWTYPE;
+
+        -- Declare a variable of the collection
+        t_classes type_coll_classes;
+
+        -- Declare a collection of pupils
+        TYPE type_coll_pupils
+            IS TABLE OF leerlingen%ROWTYPE;
+
+        -- Declare a variable of the collection
+        t_pupils type_coll_pupils := type_coll_pupils();
+
+    BEGIN
+        print('5.3 generatePupilsForEachClass(' || amount_of_pupils || ')');
+
+        -- Start by getting all classes
+        SELECT * BULK COLLECT INTO t_classes FROM klassen;
+
+        -- Now, loop through each school
+        FOR classIndex IN 1 .. t_classes.COUNT
+            LOOP
+                -- Generate classes
+                FOR pupilIndex IN 1 .. amount_of_pupils
+                    LOOP
+                        t_pupils.extend;
+                        t_pupils(t_pupils.last).voornaam := random_first_name();
+                        t_pupils(t_pupils.last).achternaam := random_last_name();
+                        t_pupils(t_pupils.last).geslacht := random_geslacht();
+                        t_pupils(t_pupils.last).klasnummer := random_number(1, 40);
+                        t_pupils(t_pupils.last).klassen_klasid := t_classes(classIndex).klasid;
+                    END LOOP;
+            END LOOP;
+
+        -- Insert pupils
+        FORALL i IN INDICES OF t_pupils
+            INSERT INTO leerlingen (KLASSEN_KLASID, VOORNAAM, ACHTERNAAM, GESLACHT, KLASNUMMER)
+            VALUES (t_pupils(i).klassen_klasid,
+                    t_pupils(i).voornaam,
+                    t_pupils(i).achternaam,
+                    t_pupils(i).geslacht,
+                    t_pupils(i).klasnummer);
+
+        print('  generatePupilsForEachClass(' || amount_of_pupils || ') generated ' || SQL%ROWCOUNT ||
+              ' pupils');
+
+    END generatePupilsForEachClassv2;
     PROCEDURE generatePupilsForEachClass(p_amount_of_pupils NUMBER)
         IS
         -- Declare a collection of pupils
@@ -674,15 +813,16 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
             IS TABLE OF leerlingen%ROWTYPE;
 
         -- Declare a variable of the collection
-        t_leerlingen type_coll_leerlingen;
+        t_leerlingen type_coll_leerlingen := type_coll_leerlingen();
 
         -- Declare a collection of classes
         TYPE type_coll_classes
             IS TABLE OF klassen%ROWTYPE;
 
         -- Declare a variable of the collection
-        t_klassen    type_coll_classes;
+        t_klassen    type_coll_classes    := type_coll_classes();
     BEGIN
+        print('5.3 generatePupilsForEachClass(' || p_amount_of_pupils || ')');
         -- Get all classes
         SELECT * BULK COLLECT
         INTO t_klassen
@@ -694,25 +834,54 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
                 -- Generate classes
                 FOR j IN 1 .. p_amount_of_pupils
                     LOOP
+                        t_leerlingen.extend;
                         t_leerlingen(j).voornaam := random_first_name();
                         t_leerlingen(j).achternaam := random_last_name();
                         t_leerlingen(j).geslacht := random_geslacht();
+                        t_leerlingen(j).klasnummer := random_number(1, 40);
                         t_leerlingen(j).klassen_klasid := t_klassen(i).klasid;
                     END LOOP;
             END LOOP;
 
         -- Insert classes
-        FORALL i IN INDICES OF t_leerlingen
+        /*FORALL i IN INDICES OF t_leerlingen
             INSERT INTO leerlingen
-            VALUES t_leerlingen(i);
+            VALUES t_leerlingen(i);*/
+
+        -- Insert classes
+        FORALL i IN INDICES OF t_leerlingen
+            INSERT INTO leerlingen (KLASSEN_KLASID, VOORNAAM, ACHTERNAAM, GESLACHT, KLASNUMMER)
+            VALUES (t_leerlingen(i).klassen_klasid,
+                    t_leerlingen(i).voornaam,
+                    t_leerlingen(i).achternaam,
+                    t_leerlingen(i).geslacht,
+                    t_leerlingen(i).klasnummer);
+
+        print('  generatePupilsForEachClass(' || p_amount_of_pupils || ') generated ' ||
+              SQL%ROWCOUNT || ' pupils');
+
     END generatePupilsForEachClass;
 
-    PROCEDURE generate_2_levels(p_amount_of_schools NUMBER, p_amount_of_classes NUMBER, p_amount_of_pupils NUMBER)
+    PROCEDURE generate_2_levels(p_amount_of_classes NUMBER, p_amount_of_pupils NUMBER)
         IS
+        v_generation_start_time NUMBER;
+        v_generation_end_time   NUMBER;
+        v_amount_of_schools     NUMBER;
     BEGIN
-        generateSchools(p_amount_of_schools);
+        v_generation_start_time := DBMS_UTILITY.get_time();
+
+        -- Get amount of schools
+        SELECT COUNT(schoolid)
+        INTO v_amount_of_schools
+        FROM scholen;
+
+        print('5.1 We already have ' || v_amount_of_schools || ' schools --> Skip schools');
         generateClassesForEachSchool(p_amount_of_classes);
-        generatePupilsForEachClass(p_amount_of_pupils);
+        generatePupilsForEachClassv2(p_amount_of_pupils);
+        v_generation_end_time := DBMS_UTILITY.get_time();
+
+        print('The duration of generate_2_levels was: ' || (v_generation_end_time - v_generation_start_time) ||
+              ' ms');
     END generate_2_levels;
 
     PROCEDURE bewijs_milestone_5
@@ -735,6 +904,11 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         print('4 - Starting Many-to-many generation: genereer_veel_op_veel(20,20,50)');
         genereer_veel_op_veel(20, 20, 50);
 
+        -- 5 - 2 levels generation
+        print('5 - Starting 2-levels generation: generate_2_levels(40,50)');
+        generate_2_levels(40, 50);
+
+        COMMIT;
     END bewijs_milestone_5;
 
 END pkg_scholen;
