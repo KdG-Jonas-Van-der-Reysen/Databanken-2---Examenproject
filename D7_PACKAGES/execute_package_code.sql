@@ -1,12 +1,15 @@
 BEGIN
     pkg_scholen.empty_tables();
+END;
+BEGIN
+
     -- Landen
     pkg_scholen.add_land('be', 'België');
 
     -- Abonnemente
-    pkg_scholen.add_abonnement('Standaard',10.00,40 );
-    pkg_scholen.add_abonnement('Premium',20.00,24 );
-    pkg_scholen.add_abonnement('Platinum',50.00,8 );
+    pkg_scholen.add_abonnement('Standaard', 10.00, 40);
+    pkg_scholen.add_abonnement('Premium', 20.00, 24);
+    pkg_scholen.add_abonnement('Platinum', 50.00, 8);
 
     -- Gemeentes
     /*INSERT INTO GEMEENTES (POSTCODE, GEMEENTE, LANDEN_LANDID)
@@ -30,9 +33,9 @@ BEGIN
     -- Scholen
     pkg_scholen.add_school_strings('GBS t Blokje', 'Kerkblokstraat', 14, 'Wuustwezel', 'Standaard');
     pkg_scholen.add_school_strings('Basisschool int groen', 'Leopoldstraat', 15, 'Brecht', 'Premium');
-    pkg_scholen.add_school_strings('GBS Kadrie', 'Driehoekstraat', 41, 'Kalmthout','Standaard');
+    pkg_scholen.add_school_strings('GBS Kadrie', 'Driehoekstraat', 41, 'Kalmthout', 'Standaard');
     pkg_scholen.add_school_strings('GBS Wigo', 'De Vondert', 1, 'Essen', 'Platinum');
-    pkg_scholen.add_school_strings('GBS De Klimboom', 'Klimboomstraat', 1, 'Wuustwezel','Standaard');
+    pkg_scholen.add_school_strings('GBS De Klimboom', 'Klimboomstraat', 1, 'Wuustwezel', 'Standaard');
 
 -- Beheerders
     pkg_scholen.add_beheerder('Jef', 'Janssens', 'jef.janssens@hotmail.com', 'jef', 'M');
@@ -80,6 +83,9 @@ BEGIN
     pkg_scholen.add_leerling('1A', 'Basisschool int groen', 'Bert', 'Van Sesamstraat', 'M', 6);
     pkg_scholen.add_leerling('2A', 'Basisschool int groen', 'Ernie', 'Van de Banaan', 'M', 7);
 
+    COMMIT;
 END;
 
-COMMIT;
+BEGIN
+    pkg_scholen.BEWIJS_MILESTONE_5();
+end;
