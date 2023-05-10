@@ -142,23 +142,23 @@ VALUES ((select KLASID
            and SCHOLEN_SCHOOLID = (select SCHOOLID from SCHOLEN where NAAM = 'GBS t Blokje')), 'Lisa', 'De Smet', 'V',
         4);
 
-INSERT INTO LEERLINGEN (KLASSEN_KLASID, VOORNAAM, ACHTERNAAM, GESLACHT, KLASNUMMER)
+INSERT INTO LEERLINGEN (KLASSEN_KLASID, VOORNAAM, ACHTERNAAM, GESLACHT, KLASNUMMER, SCORE)
 VALUES ((select KLASID
          from KLASSEN
          where NAAM = '1A'
            and SCHOLEN_SCHOOLID = (select SCHOOLID from SCHOLEN where NAAM = 'Basisschool int groen')), 'Bart',
-        'Van Damme', 'M', 5);
+        'Van Damme', 'M', 5, 75);
 
-INSERT INTO LEERLINGEN (KLASSEN_KLASID, VOORNAAM, ACHTERNAAM, GESLACHT, KLASNUMMER)
+INSERT INTO LEERLINGEN (KLASSEN_KLASID, VOORNAAM, ACHTERNAAM, GESLACHT, KLASNUMMER, SCORE)
 VALUES ((select KLASID
          from KLASSEN
          where NAAM = '1A'
            and SCHOLEN_SCHOOLID = (select SCHOOLID from SCHOLEN where NAAM = 'Basisschool int groen')), 'Bert',
-        'Van Sesamstraat', 'M', 6);
+        'Van Sesamstraat', 'M', 6, 75);
 
-INSERT INTO LEERLINGEN (KLASSEN_KLASID, VOORNAAM, ACHTERNAAM, GESLACHT, KLASNUMMER)
+INSERT INTO LEERLINGEN (KLASSEN_KLASID, VOORNAAM, ACHTERNAAM, GESLACHT, KLASNUMMER, SCORE)
 VALUES ((select KLASID
          from KLASSEN
          where NAAM = '2A'
            and SCHOLEN_SCHOOLID = (select SCHOOLID from SCHOLEN where NAAM = 'Basisschool int groen')), 'Ernie',
-        'Van de Banaan', 'M', 7);
+        'Van de Banaan', 'M', 7, 75);

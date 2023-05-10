@@ -56,7 +56,8 @@ AS
         p_voornaam IN VARCHAR2,
         p_achternaam IN VARCHAR2,
         p_geslacht IN VARCHAR2,
-        p_klasnummer IN NUMBER
+        p_klasnummer IN NUMBER,
+        p_score IN NUMBER
     );
     PROCEDURE add_abonnement(
         p_naam IN VARCHAR2,
@@ -87,6 +88,9 @@ AS
 
     -- Optellen gegeven tabel Z voor rij uit tabel X
     PROCEDURE calculate_pupils_of_gender_in_school(p_school_name scholen.naam%TYPE, p_gender leerlingen.geslacht%TYPE);
+
+    -- Rapport M6
+    PROCEDURE printreport_2_levels(p_n_schools NUMBER, p_n_classes NUMBER, p_n_pupils NUMBER);
 
 END pkg_scholen;
 

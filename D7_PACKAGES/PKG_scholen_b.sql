@@ -505,11 +505,12 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         p_voornaam IN VARCHAR2,
         p_achternaam IN VARCHAR2,
         p_geslacht IN VARCHAR2,
-        p_klasnummer IN NUMBER
+        p_klasnummer IN NUMBER,
+        p_score IN NUMBER
     ) IS
     BEGIN
-        INSERT INTO LEERLINGEN (KLASSEN_KLASID, VOORNAAM, ACHTERNAAM, GESLACHT, KLASNUMMER)
-        VALUES (p_klasid, p_voornaam, p_achternaam, p_geslacht, p_klasnummer);
+        INSERT INTO LEERLINGEN (KLASSEN_KLASID, VOORNAAM, ACHTERNAAM, GESLACHT, KLASNUMMER, SCORE)
+        VALUES (p_klasid, p_voornaam, p_achternaam, p_geslacht, p_klasnummer, p_score);
     END add_leerling;
 
 -- Add leerling met klas naam en school naam
@@ -520,13 +521,14 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         p_voornaam IN VARCHAR2,
         p_achternaam IN VARCHAR2,
         p_geslacht IN VARCHAR2,
-        p_klasnummer IN NUMBER
+        p_klasnummer IN NUMBER,
+        p_score IN NUMBER
     ) IS
         v_klasid klassen.klasid % TYPE;
     BEGIN
         v_klasid := lookup_klas(p_klas, p_school);
 
-        add_leerling(v_klasid, p_voornaam, p_achternaam, p_geslacht, p_klasnummer);
+        add_leerling(v_klasid, p_voornaam, p_achternaam, p_geslacht, p_klasnummer, p_score);
     END add_leerling;
 
 -- Add abonnement
@@ -704,7 +706,7 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         v_finish_generation_time := DBMS_UTILITY.get_time();
 
         print('The duration of genereer_veel_op_veel was: ' || (v_finish_generation_time - v_start_generation_time) ||
-              ' ms');
+              ' s');
     END;
 
     PROCEDURE generateClassesForEachSchool(p_amount_of_classes NUMBER)
@@ -789,18 +791,20 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
                         t_pupils(t_pupils.last).achternaam := random_last_name();
                         t_pupils(t_pupils.last).geslacht := random_geslacht();
                         t_pupils(t_pupils.last).klasnummer := random_number(1, 40);
+                        t_pupils(t_pupils.last).score := random_number(0, 100);
                         t_pupils(t_pupils.last).klassen_klasid := t_classes(classIndex).klasid;
                     END LOOP;
             END LOOP;
 
         -- Insert pupils
         FORALL i IN INDICES OF t_pupils
-            INSERT INTO leerlingen (KLASSEN_KLASID, VOORNAAM, ACHTERNAAM, GESLACHT, KLASNUMMER)
+            INSERT INTO leerlingen (KLASSEN_KLASID, VOORNAAM, ACHTERNAAM, GESLACHT, KLASNUMMER, SCORE)
             VALUES (t_pupils(i).klassen_klasid,
                     t_pupils(i).voornaam,
                     t_pupils(i).achternaam,
                     t_pupils(i).geslacht,
-                    t_pupils(i).klasnummer);
+                    t_pupils(i).klasnummer,
+                    t_pupils(i).score);
 
         print('  generatePupilsForEachClass(' || p_amount_of_pupils || ') generated ' || SQL%ROWCOUNT ||
               ' pupils');
@@ -894,7 +898,8 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
                 select count(geslacht)
                 INTO v_n_gender_class
                 FROM LEERLINGEN
-                WHERE geslacht = p_gender AND klassen_klasid = t_classes(i);
+                WHERE geslacht = p_gender
+                  AND klassen_klasid = t_classes(i);
 
                 v_n_gender := v_n_gender + v_n_gender_class;
             END LOOP;
@@ -902,4 +907,112 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         print('Er zijn ' || v_n_gender || ' mensen met het gender ' || p_gender || ' op school ' || v_school);
 
     END calculate_pupils_of_gender_in_school;
+
+    PROCEDURE printreport_2_levels(p_n_schools NUMBER, p_n_classes NUMBER, p_n_pupils NUMBER)
+        IS
+        -- Cursor for schools
+        CURSOR cur_school IS
+            SELECT s.schoolid,
+                   s.naam,
+                   s.straat || ' ' || s.huisnummer || ', ' || g.postcode || ' ' || g.gemeente || ', ' ||
+                   landen.landnaam            as adres,
+                   ROUND(AVG(l.score)) || '%' as "Average score"
+            FROM scholen s
+                     JOIN gemeentes g ON s.gemeentes_postcode = g.postcode
+                     JOIN landen ON g.landen_landid = landen.landid
+                     JOIN klassen k ON s.schoolid = k.scholen_schoolid
+                     JOIN leerlingen l ON k.klasid = l.klassen_klasid
+            GROUP BY s.schoolid, s.naam, s.straat, s.huisnummer, g.postcode, g.gemeente, landen.landnaam
+            ORDER BY s.schoolid;
+
+        -- Cursor for classes
+        CURSOR cur_class (p_schoolid NUMBER) IS
+            SELECT k.klasid, k.naam, k.leerjaar, ROUND(AVG(l.score)) || '%' as "Average score"
+            FROM klassen k
+                     INNER JOIN leerlingen l ON k.klasid = l.klassen_klasid
+            WHERE k.scholen_schoolid = p_schoolid
+            GROUP BY k.klasid, k.naam, k.leerjaar;
+
+        -- Cursor for pupils
+        CURSOR cur_pupil (p_classid NUMBER) IS
+            SELECT leerlingid, voornaam || ' ' || achternaam as "NAAM", score || '%' as "SCORE"
+            FROM leerlingen
+            WHERE klassen_klasid = p_classid;
+    BEGIN
+        print('Not implemented yet');
+
+        print('====================================================================================');
+        print('===========================     Rapport M6 - Scholen     ===========================');
+        print('====================================================================================');
+
+        print('____________________________________________________________________________________');
+        print('| ID | NAAM       | ADRES                                              | AVG Score |');
+
+
+        FOR r_school IN cur_school
+            LOOP
+                print('|----------------------------------------------------------------------------------|');
+
+                -- | 1  | School 1   | Vijverlaan 1, 2910 Essen, België                   | 51%       |
+                print(
+                            '| '
+                            ||
+                            RPAD(r_school.schoolid, 3)
+                            || '| ' ||
+                            RPAD(r_school.naam, 11)
+                            || '| ' ||
+                            RPAD(r_school.adres, 51)
+                            || '| ' ||
+                            RPAD(r_school."Average score", 10)
+                            || '|'
+                    );
+
+                print('|----------------------------------------------------------------------------------|');
+                print('|   Klassen:                                                                       |');
+                print('|   ________________________________________________________________________       |');
+                print('|   | ID | NAAM         | AVG score                                        |       |');
+
+                -- TODO: Error when there are no classes
+                -- Print classes
+                FOR r_class in cur_class(r_school.schoolid)
+                    LOOP
+                        print('|   |----------------------------------------------------------------------|       |');
+
+                        -- |   | 1  | Klas 2-S1    | 35%                                              |       |
+                        print(
+                                    '|   | '
+                                    || RPAD(r_class.klasid, 3) ||
+                                    '| ' || RPAD(r_class.naam, 13) ||
+                                    '| ' || RPAD(r_class."Average score", 49) || '|       |');
+
+                        print('|   |----------------------------------------------------------------------|       |');
+                        print('|   |  Leerlingen:                                                         |       |');
+                        print('|   |  _____________________________________________________________       |       |');
+                        print('|   |  | ID | VOLLEDIGE NAAM        | Score                        |       |       |');
+
+                        -- TODO: Error when there are no pupils
+                        -- Print pupils
+                        FOR r_pupil IN cur_pupil(r_class.klasid)
+                            LOOP
+                                print('|   |  |-----------------------------------------------------------|       |       |');
+                                -- |   |  | 1  | Maarten Van Dijk      | 49%                          |       |       |
+                                print('|   |  | '
+                                    || RPAD(r_pupil.leerlingid, 3) ||
+                                      '| ' || RPAD(r_pupil.naam, 22) || '| ' || RPAD(r_pupil.score, 29)
+                                    || '|       |       |');
+
+                                EXIT WHEN cur_class%ROWCOUNT = p_n_pupils;
+                            END LOOP;
+
+
+                        EXIT WHEN cur_class%ROWCOUNT = p_n_classes;
+                    END LOOP;
+
+                print('|                                                                                  |');
+                EXIT WHEN cur_school%ROWCOUNT = p_n_schools;
+            END LOOP;
+
+
+    END printreport_2_levels;
 END pkg_scholen;
+

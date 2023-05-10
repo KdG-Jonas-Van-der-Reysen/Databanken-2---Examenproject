@@ -76,13 +76,13 @@ BEGIN
     pkg_scholen.add_klas('Basisschool int groen', '2B', 2);
 
 -- Leerlingen
-    pkg_scholen.add_leerling('1A', 'GBS t Blokje', 'Jef', 'Janssens', 'M', 1);
-    pkg_scholen.add_leerling('1B', 'GBS t Blokje', 'Sofie', 'Peeters', 'V', 2);
-    pkg_scholen.add_leerling('2B', 'GBS t Blokje', 'Tom', 'Vermeulen', 'M', 3);
-    pkg_scholen.add_leerling('1A', 'GBS t Blokje', 'Lisa', 'De Smet', 'V', 4);
-    pkg_scholen.add_leerling('1A', 'Basisschool int groen', 'Bart', 'Van Damme', 'M', 5);
-    pkg_scholen.add_leerling('1A', 'Basisschool int groen', 'Bert', 'Van Sesamstraat', 'M', 6);
-    pkg_scholen.add_leerling('2A', 'Basisschool int groen', 'Ernie', 'Van de Banaan', 'M', 7);
+    pkg_scholen.add_leerling('1A', 'GBS t Blokje', 'Jef', 'Janssens', 'M', 1,39);
+    pkg_scholen.add_leerling('1B', 'GBS t Blokje', 'Sofie', 'Peeters', 'V', 2,49);
+    pkg_scholen.add_leerling('2B', 'GBS t Blokje', 'Tom', 'Vermeulen', 'M', 3,12);
+    pkg_scholen.add_leerling('1A', 'GBS t Blokje', 'Lisa', 'De Smet', 'V', 4,94);
+    pkg_scholen.add_leerling('1A', 'Basisschool int groen', 'Bart', 'Van Damme', 'M',5 ,28);
+    pkg_scholen.add_leerling('1A', 'Basisschool int groen', 'Bert', 'Van Sesamstraat', 'M', 6, 73);
+    pkg_scholen.add_leerling('2A', 'Basisschool int groen', 'Ernie', 'Van de Banaan', 'M', 7, 16);
 
     COMMIT;
 END;
@@ -123,5 +123,5 @@ BEGIN
     COMMIT;
 end;
 BEGIN
-    pkg_scholen.CALCULATE_PUPILS_OF_GENDER_IN_SCHOOL('School 20', 'V');
+    pkg_scholen.printreport_2_levels(5,5,5);
 end;

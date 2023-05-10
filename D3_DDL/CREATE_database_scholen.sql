@@ -51,7 +51,9 @@ CREATE TABLE leerlingen
     geslacht       CHAR(1)
         CONSTRAINT leerlingen_geslacht_MVX CHECK ( geslacht IN ('M', 'V', 'X') ),
     klasnummer     NUMBER                                                               NOT NULL
-        CONSTRAINT leerlingen_klasnummer_tss_0_40 CHECK ( klasnummer BETWEEN 1 AND 40 )
+        CONSTRAINT leerlingen_klasnummer_tss_0_40 CHECK ( klasnummer BETWEEN 1 AND 40 ),
+    score NUMBER(3, 0)
+        CONSTRAINT leerlingen_score_percentage_tss_0_100 CHECK ( score BETWEEN 0 AND 100 )
 );
 
 CREATE TABLE scholen
