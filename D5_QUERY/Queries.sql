@@ -92,6 +92,21 @@ select voornaam, achternaam FROM LEERLINGEN
 FETCH FIRST 40 rows ONLY;
 
 
+SELECT s.schoolid,
+       s.naam,
+       s.straat || ' ' || s.huisnummer || ', ' || g.postcode || ' ' || g.gemeente || ', ' ||
+       landen.landnaam            as adres,
+       ROUND(AVG(l.score)) || '%' as "Average score"
+FROM scholen s
+         JOIN gemeentes g ON s.gemeentes_postcode = g.postcode
+         JOIN landen ON g.landen_landid = landen.landid
+         LEFT JOIN klassen k ON s.schoolid = k.scholen_schoolid
+         LEFT JOIN leerlingen l ON k.klasid = l.klassen_klasid
+GROUP BY s.schoolid, s.naam, s.straat, s.huisnummer, g.postcode, g.gemeente, landen.landnaam
+ORDER BY s.schoolid;
+
+
+
 
 
 

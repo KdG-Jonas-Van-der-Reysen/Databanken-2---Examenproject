@@ -920,8 +920,8 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
             FROM scholen s
                      JOIN gemeentes g ON s.gemeentes_postcode = g.postcode
                      JOIN landen ON g.landen_landid = landen.landid
-                     JOIN klassen k ON s.schoolid = k.scholen_schoolid
-                     JOIN leerlingen l ON k.klasid = l.klassen_klasid
+                     LEFT JOIN klassen k ON s.schoolid = k.scholen_schoolid
+                     LEFT JOIN leerlingen l ON k.klasid = l.klassen_klasid
             GROUP BY s.schoolid, s.naam, s.straat, s.huisnummer, g.postcode, g.gemeente, landen.landnaam
             ORDER BY s.schoolid;
 
@@ -939,18 +939,13 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
             FROM leerlingen
             WHERE klassen_klasid = p_classid;
     BEGIN
-        print('Not implemented yet');
-
-        print('====================================================================================');
-        print('===========================     Rapport M6 - Scholen     ===========================');
-        print('====================================================================================');
-
         print('____________________________________________________________________________________');
         print('| ID | NAAM       | ADRES                                              | AVG Score |');
 
 
         FOR r_school IN cur_school
             LOOP
+
                 print('|----------------------------------------------------------------------------------|');
 
                 -- | 1  | School 1   | Vijverlaan 1, 2910 Essen, België                   | 51%       |
@@ -976,6 +971,10 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
                 -- Print classes
                 FOR r_class in cur_class(r_school.schoolid)
                     LOOP
+                        if(cur_class%NOTFOUND AND cur_class%ROWCOUNT = 0) then
+                            print('No classes found');
+                        end if;
+
                         print('|   |----------------------------------------------------------------------|       |');
 
                         -- |   | 1  | Klas 2-S1    | 35%                                              |       |
@@ -986,31 +985,33 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
                                     '| ' || RPAD(r_class."Average score", 49) || '|       |');
 
                         print('|   |----------------------------------------------------------------------|       |');
-                        print('|   |  Leerlingen:                                                         |       |');
-                        print('|   |  _____________________________________________________________       |       |');
-                        print('|   |  | ID | VOLLEDIGE NAAM        | Score                        |       |       |');
+                        print('|   |   Leerlingen:                                                        |       |');
+                        print('|   |   _____________________________________________________________      |       |');
+                        print('|   |   | ID | VOLLEDIGE NAAM        | Score                        |      |       |');
 
                         -- TODO: Error when there are no pupils
                         -- Print pupils
                         FOR r_pupil IN cur_pupil(r_class.klasid)
                             LOOP
-                                print('|   |  |-----------------------------------------------------------|       |       |');
-                                -- |   |  | 1  | Maarten Van Dijk      | 49%                          |       |       |
-                                print('|   |  | '
+                                print('|   |   |-----------------------------------------------------------|      |       |');
+                                -- |   |   | 1  | Maarten Van Dijk      | 49%                          |      |       |
+                                print('|   |   | '
                                     || RPAD(r_pupil.leerlingid, 3) ||
                                       '| ' || RPAD(r_pupil.naam, 22) || '| ' || RPAD(r_pupil.score, 29)
-                                    || '|       |       |');
+                                    || '|      |       |');
 
-                                EXIT WHEN cur_class%ROWCOUNT = p_n_pupils;
+                                EXIT WHEN cur_pupil%ROWCOUNT = p_n_pupils;
                             END LOOP;
-
-
+                        print('|   |   |-----------------------------------------------------------|      |       |');
+                        print('|   |                                                                      |       |');
                         EXIT WHEN cur_class%ROWCOUNT = p_n_classes;
                     END LOOP;
 
+                print('|   |----------------------------------------------------------------------|       |');
                 print('|                                                                                  |');
                 EXIT WHEN cur_school%ROWCOUNT = p_n_schools;
             END LOOP;
+        print('|----------------------------------------------------------------------------------|');
 
 
     END printreport_2_levels;
