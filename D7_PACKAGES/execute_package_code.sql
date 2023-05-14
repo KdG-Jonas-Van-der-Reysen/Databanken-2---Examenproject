@@ -129,7 +129,7 @@ BEGIN
     COMMIT;
 end;
 BEGIN
-    pkg_scholen.printreport_2_levels(2, 2, 2);
+    pkg_scholen.printreport_2_levels(3, 2, 5);
 end;
 
 -- Fill to test error of no classes
@@ -164,5 +164,26 @@ BEGIN
     pkg_scholen.add_schoolbeheerder('GBS Wigo', 'Jef', 'Janssens');
     pkg_scholen.add_schoolbeheerder('GBS Wigo', 'Peter', 'Vermeulen');
     pkg_scholen.add_schoolbeheerder('GBS De Klimboom', 'Laura', 'Peters');
+
+    -- Klassen
+    pkg_scholen.add_klas('GBS t Blokje', '1A', 1);
+    pkg_scholen.add_klas('GBS t Blokje', '1B', 1);
+    pkg_scholen.add_klas('GBS t Blokje', '2A', 2);
+    pkg_scholen.add_klas('GBS t Blokje', '2B', 2);
+    pkg_scholen.add_klas('Basisschool int groen', '1A', 1);
+    pkg_scholen.add_klas('Basisschool int groen', '1B', 1);
+    pkg_scholen.add_klas('Basisschool int groen', '2A', 2);
+    pkg_scholen.add_klas('Basisschool int groen', '2B', 2);
+
+    -- Leerlingen
+    pkg_scholen.add_leerling('1A', 'GBS t Blokje', 'Jef', 'Janssens', 'M', 1, 39);
+    pkg_scholen.add_leerling('1B', 'GBS t Blokje', 'Sofie', 'Peeters', 'V', 2, 49);
+    pkg_scholen.add_leerling('2B', 'GBS t Blokje', 'Tom', 'Vermeulen', 'M', 3, 12);
+    pkg_scholen.add_leerling('1A', 'GBS t Blokje', 'Lisa', 'De Smet', 'V', 4, 94);
+    pkg_scholen.add_leerling('1A', 'Basisschool int groen', 'Bart', 'Van Damme', 'M', 5, 28);
+    pkg_scholen.add_leerling('1A', 'Basisschool int groen', 'Bert', 'Van Sesamstraat', 'M', 6, 73);
+    pkg_scholen.add_leerling('2A', 'Basisschool int groen', 'Ernie', 'Van de Banaan', 'M', 7, 16);
+
+
     COMMIT;
 END;

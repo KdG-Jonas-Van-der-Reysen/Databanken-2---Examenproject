@@ -929,7 +929,7 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         CURSOR cur_class (p_schoolid NUMBER) IS
             SELECT k.klasid, k.naam, k.leerjaar, ROUND(AVG(l.score)) || '%' as "Average score"
             FROM klassen k
-                     INNER JOIN leerlingen l ON k.klasid = l.klassen_klasid
+                     LEFT JOIN leerlingen l ON k.klasid = l.klassen_klasid
             WHERE k.scholen_schoolid = p_schoolid
             GROUP BY k.klasid, k.naam, k.leerjaar;
 
@@ -938,13 +938,29 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
             SELECT leerlingid, voornaam || ' ' || achternaam as "NAAM", score || '%' as "SCORE"
             FROM leerlingen
             WHERE klassen_klasid = p_classid;
+
+        -- Variables to see if the cursors were empty
+        v_school_empty BOOLEAN := TRUE;
+        v_class_empty  BOOLEAN := TRUE;
+        v_pupil_empty  BOOLEAN := TRUE;
+
+        -- Exception for when a parameter is negative
+        exc_negative_param EXCEPTION;
     BEGIN
+        -- Check if the parms are negative
+        IF p_n_schools < 0 OR p_n_classes < 0 OR p_n_pupils < 0
+            THEN
+                RAISE exc_negative_param;
+        END IF;
+
+
         print('____________________________________________________________________________________');
         print('| ID | NAAM       | ADRES                                              | AVG Score |');
-
+        print('|----------------------------------------------------------------------------------|');
 
         FOR r_school IN cur_school
             LOOP
+                v_school_empty := FALSE;
 
                 print('|----------------------------------------------------------------------------------|');
 
@@ -969,11 +985,10 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
 
                 -- TODO: Error when there are no classes
                 -- Print classes
+                v_class_empty := TRUE;
                 FOR r_class in cur_class(r_school.schoolid)
                     LOOP
-                        if(cur_class%NOTFOUND AND cur_class%ROWCOUNT = 0) then
-                            print('No classes found');
-                        end if;
+                        v_class_empty := FALSE;
 
                         print('|   |----------------------------------------------------------------------|       |');
 
@@ -991,8 +1006,10 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
 
                         -- TODO: Error when there are no pupils
                         -- Print pupils
+                        v_pupil_empty := TRUE;
                         FOR r_pupil IN cur_pupil(r_class.klasid)
                             LOOP
+                                v_pupil_empty := FALSE;
                                 print('|   |   |-----------------------------------------------------------|      |       |');
                                 -- |   |   | 1  | Maarten Van Dijk      | 49%                          |      |       |
                                 print('|   |   | '
@@ -1002,18 +1019,36 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
 
                                 EXIT WHEN cur_pupil%ROWCOUNT = p_n_pupils;
                             END LOOP;
+
+                        if v_pupil_empty then
+                            print('|   |   |-----------------------------------------------------------|      |       |');
+                            print('|   |   | Er zijn geen leerlingen voor deze klas                    |      |       |');
+                        end if;
                         print('|   |   |-----------------------------------------------------------|      |       |');
                         print('|   |                                                                      |       |');
                         EXIT WHEN cur_class%ROWCOUNT = p_n_classes;
                     END LOOP;
 
+                if v_class_empty then
+                    print('|   |----------------------------------------------------------------------|       |');
+                    print('|   | Er zijn geen klassen voor deze school                                |       |');
+                end if;
+
                 print('|   |----------------------------------------------------------------------|       |');
                 print('|                                                                                  |');
                 EXIT WHEN cur_school%ROWCOUNT = p_n_schools;
             END LOOP;
+
+        if v_school_empty then
+            print('| Er zijn geen scholen gevonden                                                    |');
+        end if;
+
         print('|----------------------------------------------------------------------------------|');
 
-
+        EXCEPTION
+            WHEN exc_negative_param
+                THEN
+                    print('Please only use positive numbers for the parameters.');
     END printreport_2_levels;
 END pkg_scholen;
 

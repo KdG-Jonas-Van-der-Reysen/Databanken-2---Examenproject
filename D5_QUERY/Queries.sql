@@ -75,17 +75,17 @@ FROM scholen;
 
 SELECT k.klasid, k.naam, k.leerjaar, ROUND(AVG(l.score)) || '%' as "Average score"
 FROM klassen k
-INNER JOIN leerlingen l ON k.klasid = l.klassen_klasid
+LEFT JOIN leerlingen l ON k.klasid = l.klassen_klasid
 WHERE k.scholen_schoolid = 1
 GROUP BY k.klasid, k.naam, k.leerjaar;
 
 
 SELECT leerlingid, voornaam, achternaam, score || '%' as "SCORE"
-FROM leerlingen
-WHERE klassen_klasid=1;
+FROM leerlingen;
 
 Select * from scholen;
 
+select * from klassen;
 select * from leerlingen;
 
 select voornaam, achternaam FROM LEERLINGEN
