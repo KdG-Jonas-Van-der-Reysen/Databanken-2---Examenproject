@@ -1,5 +1,7 @@
 CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
-    -- Private helper (mostly lookup) functions
+    -- ===========================
+    -- Utility procedures
+    -- ===========================
     PROCEDURE print(p_string IN VARCHAR2)
         IS
         v_timestamp VARCHAR2(22);
@@ -9,6 +11,9 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         DBMS_OUTPUT.PUT_LINE(v_timestamp || p_string);
     END print;
 
+    -- ===========================
+    -- Lookup functions
+    -- ===========================
     FUNCTION lookup_abonnement(p_abonnement IN varchar2) RETURN NUMBER IS
         v_abonnementid abonnementen.abonnementid % TYPE;
     BEGIN
@@ -20,7 +25,6 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         return v_abonnementid;
 
     END lookup_abonnement;
-
     FUNCTION lookup_land(p_land IN varchar2) RETURN NUMBER IS
         v_landid landen.landid % TYPE;
 
@@ -33,7 +37,6 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         return v_landid;
 
     END lookup_land;
-
     FUNCTION lookup_gemeente(p_naam IN varchar2) RETURN NUMBER IS
         v_postcode landen.landid % TYPE;
     BEGIN
@@ -45,7 +48,6 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         return v_postcode;
 
     END lookup_gemeente;
-
     FUNCTION lookup_school(p_school IN varchar2) RETURN NUMBER IS
         v_schoolid scholen.schoolid % TYPE;
 
@@ -58,7 +60,6 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         RETURN v_schoolid;
 
     END lookup_school;
-
     FUNCTION lookup_beheerder(p_voornaam IN VARCHAR2, p_achternaam IN VARCHAR2) RETURN NUMBER IS
         v_beheerderid beheerders.beheerderid % TYPE;
 
@@ -72,7 +73,6 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         RETURN v_beheerderid;
 
     END lookup_beheerder;
-
     FUNCTION lookup_klas(p_klasnaam IN VARCHAR2, p_schoolnaam IN VARCHAR2)
         RETURN NUMBER IS
         v_klasid   klassen.klasid % TYPE;
@@ -89,7 +89,9 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         RETURN v_klasid;
     END lookup_klas;
 
-    -- Data generation helper functions
+    -- ===========================
+    -- Random generator functions
+    -- ===========================
     FUNCTION random_number(p_lowerBound NUMBER, p_upperBound NUMBER)
         RETURN NUMBER
         IS
@@ -98,7 +100,6 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         v_generated_number := DBMS_RANDOM.VALUE(p_lowerBound, p_upperBound);
         return v_generated_number;
     END;
-
     FUNCTION random_string(p_length NUMBER)
         RETURN VARCHAR2
         IS
@@ -107,7 +108,6 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         v_generated_string := DBMS_RANDOM.STRING('A', p_length);
         return v_generated_string;
     END;
-
     FUNCTION random_date(date_start DATE, date_end DATE)
         RETURN DATE
         IS
@@ -119,28 +119,9 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         return v_generated_date;
     END;
 
-    FUNCTION random_street_name
-        RETURN scholen.straat%TYPE
-        IS
-        TYPE type_tab_street IS TABLE OF
-            scholen.straat%TYPE
-            INDEX BY PLS_INTEGER;
-        t_straat type_tab_street := type_tab_street(
-                1 => 'Jan Steenlaan',
-                2 => 'Kerkstraat',
-                3 => 'Molenweg',
-                4 => 'Beukenlaan',
-                5 => 'Prins Hendrikstraat',
-                6 => 'Wilhelminastraat',
-                7 => 'Vijverlaan',
-                8 => 'Parkweg',
-                9 => 'Van Goghstraat',
-                10 => 'Burg. de Vlugtlaan'
-            );
-    BEGIN
-        RETURN t_straat(random_number(1, t_straat.COUNT));
-    END random_street_name;
-
+    -- ===========================
+    -- Random selector functions
+    -- ===========================
     FUNCTION random_first_name
         RETURN beheerders.voornaam%TYPE
         IS
@@ -162,7 +143,6 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
     BEGIN
         RETURN t_first_name(random_number(1, t_first_name.COUNT));
     END random_first_name;
-
     FUNCTION random_last_name
         RETURN beheerders.achternaam%TYPE
         IS
@@ -185,6 +165,27 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         RETURN t_last_name(random_number(1, t_last_name.COUNT));
     END random_last_name;
 
+    FUNCTION random_street_name
+        RETURN scholen.straat%TYPE
+        IS
+        TYPE type_tab_street IS TABLE OF
+            scholen.straat%TYPE
+            INDEX BY PLS_INTEGER;
+        t_straat type_tab_street := type_tab_street(
+                1 => 'Jan Steenlaan',
+                2 => 'Kerkstraat',
+                3 => 'Molenweg',
+                4 => 'Beukenlaan',
+                5 => 'Prins Hendrikstraat',
+                6 => 'Wilhelminastraat',
+                7 => 'Vijverlaan',
+                8 => 'Parkweg',
+                9 => 'Van Goghstraat',
+                10 => 'Burg. de Vlugtlaan'
+            );
+    BEGIN
+        RETURN t_straat(random_number(1, t_straat.COUNT));
+    END random_street_name;
     FUNCTION random_email(p_voornaam IN VARCHAR2, p_achternaam IN VARCHAR2)
         RETURN beheerders.emailadres%TYPE
         IS
@@ -206,8 +207,6 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
     BEGIN
         RETURN p_voornaam || '.' || p_achternaam || '@' || t_email_domains(random_number(1, t_email_domains.COUNT));
     END random_email;
-
-    -- M, V, X
     FUNCTION random_geslacht
         RETURN beheerders.geslacht%TYPE
         IS
@@ -223,7 +222,9 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         RETURN t_geslacht(random_number(1, t_geslacht.COUNT));
     END random_geslacht;
 
-    -- Function that returns the id of a random row in the abonnement table
+    -- ===========================
+    -- Random lookup functions
+    -- ===========================
     FUNCTION random_abonnement
         RETURN abonnementen.abonnementid%TYPE
         IS
@@ -240,8 +241,6 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         v_abonnementid := t_abonnement(random_number(1, t_abonnement.COUNT));
         RETURN v_abonnementid;
     END random_abonnement;
-
-    -- Function that returns the postalcode of a random row in the gemeentes table
     FUNCTION random_postalcode
         RETURN gemeentes.postcode%TYPE
         IS
@@ -263,8 +262,6 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         v_postalcode := t_postalcode(random_number(1, t_postalcode.COUNT));
         RETURN v_postalcode;
     END random_postalcode;
-
-    -- Function that returns the schoolId of a random school in the scholen table
     FUNCTION random_school
         RETURN scholen.schoolid%TYPE
         IS
@@ -284,8 +281,6 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         v_schoolid := t_schoolid(v_random_index);
         RETURN v_schoolid;
     END random_school;
-
-    -- Function that returns the beheerderId of a random beheerder in the beheerders table
     FUNCTION random_beheerder
         RETURN beheerders.beheerderid%TYPE
         IS
@@ -303,39 +298,10 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         RETURN v_beheerderid;
     END random_beheerder;
 
-    -- Public procedures & functions
-    PROCEDURE empty_tables IS
-    BEGIN
-        EXECUTE IMMEDIATE 'PURGE RECYCLEBIN';
-        -- Clear data
-        EXECUTE IMMEDIATE 'truncate TABLE leerlingen';
-        EXECUTE IMMEDIATE 'truncate TABLE klassen';
-        EXECUTE IMMEDIATE 'truncate TABLE schoolbeheerders';
-        EXECUTE IMMEDIATE 'truncate TABLE beheerders';
-        EXECUTE IMMEDIATE 'truncate TABLE scholen';
-        EXECUTE IMMEDIATE 'truncate TABLE abonnementen';
-        EXECUTE IMMEDIATE 'truncate TABLE gemeentes';
-        EXECUTE IMMEDIATE 'truncate TABLE landen';
 
-        -- Reset identity columns
-        EXECUTE IMMEDIATE 'ALTER TABLE beheerders
-            MODIFY beheerderid GENERATED ALWAYS as identity (start with 1)';
-        EXECUTE IMMEDIATE 'ALTER TABLE landen
-            MODIFY landid GENERATED ALWAYS as identity (start with 1)';
-        EXECUTE IMMEDIATE 'ALTER TABLE klassen
-            MODIFY klasid GENERATED ALWAYS as identity (start with 1)';
-        EXECUTE IMMEDIATE 'ALTER TABLE leerlingen
-            MODIFY leerlingid GENERATED ALWAYS as identity (start with 1)';
-        EXECUTE IMMEDIATE 'ALTER TABLE scholen
-            MODIFY schoolid GENERATED ALWAYS as identity (start with 1)';
-        EXECUTE IMMEDIATE 'ALTER TABLE abonnementen
-            MODIFY abonnementid GENERATED ALWAYS as identity (start with 1)';
-
-        print('De tabellen zijn leeggemaakt');
-
-    END empty_tables;
-
--- Add land
+    -- =======================
+    -- Adding data procedures
+    -- =======================
     PROCEDURE
         add_land(p_landCode IN VARCHAR2, p_landNaam IN VARCHAR2) IS
     BEGIN
@@ -344,7 +310,6 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
 
     END;
 
--- Add gemeente met landid
     PROCEDURE
         add_gemeente(
         p_postcode IN NUMBER,
@@ -356,8 +321,6 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         VALUES (p_postcode, p_gemeente, p_landid);
 
     END add_gemeente;
-
--- Add gemeente met landnaam
     PROCEDURE
         add_gemeente(
         p_postcode IN NUMBER,
@@ -373,7 +336,6 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
 
     END add_gemeente;
 
--- Add school met postcode en abonnementid
     PROCEDURE
         add_school(
         p_naam IN VARCHAR2,
@@ -392,8 +354,6 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
                 p_abonnementId);
 
     END add_school;
-
--- Add school met gemeente naam en abonnement naam
     PROCEDURE
         add_school_strings(
         p_naam IN VARCHAR2,
@@ -418,7 +378,6 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
 
     END add_school_strings;
 
--- Add beheerder
     PROCEDURE
         add_beheerder(
         p_voornaam IN VARCHAR2,
@@ -441,7 +400,6 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
 
     END add_beheerder;
 
--- Add schoolbeheerder
     PROCEDURE
         add_schoolbeheerder(p_schoolid IN NUMBER, p_beheerderid IN NUMBER) IS
     BEGIN
@@ -449,8 +407,6 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         VALUES (p_schoolid, p_beheerderid);
 
     END add_schoolbeheerder;
-
--- Add schoolbeheerder met school naam & beheerder voor- en achternaam
     PROCEDURE
         add_schoolbeheerder(
         p_school IN VARCHAR2,
@@ -469,7 +425,6 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
 
     END add_schoolbeheerder;
 
--- Add klassen
     PROCEDURE
         add_klas(
         p_schoolid IN NUMBER,
@@ -481,8 +436,6 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         VALUES (p_schoolid, p_naam, p_leerjaar);
 
     END add_klas;
-
--- Add klassen met school naam
     PROCEDURE
         add_klas(
         p_school IN VARCHAR2,
@@ -498,7 +451,6 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
 
     END add_klas;
 
--- Add leerling
     PROCEDURE
         add_leerling(
         p_klasid IN NUMBER,
@@ -512,8 +464,6 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         INSERT INTO LEERLINGEN (KLASSEN_KLASID, VOORNAAM, ACHTERNAAM, GESLACHT, KLASNUMMER, SCORE)
         VALUES (p_klasid, p_voornaam, p_achternaam, p_geslacht, p_klasnummer, p_score);
     END add_leerling;
-
--- Add leerling met klas naam en school naam
     PROCEDURE
         add_leerling(
         p_klas IN VARCHAR2,
@@ -531,7 +481,6 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         add_leerling(v_klasid, p_voornaam, p_achternaam, p_geslacht, p_klasnummer, p_score);
     END add_leerling;
 
--- Add abonnement
     PROCEDURE
         add_abonnement(
         p_naam IN VARCHAR2,
@@ -543,13 +492,213 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         VALUES (p_naam, p_prijs, p_supportSLA);
     END add_abonnement;
 
-    -- =================
+    -- =======================
     -- Generating data
-    -- =================
-
-    -- Generate schools
+    -- =======================
     PROCEDURE
         generateSchools(p_amount IN NUMBER)
+        IS
+    BEGIN
+        print('4.1 generateSchools(' || p_amount || ')');
+        -- Generate schools
+        FOR i IN 1 .. p_amount
+            LOOP
+                add_school(
+                            'School ' || i,
+                            random_street_name(),
+                            i,
+                            random_postalcode(),
+                            random_abonnement()
+                    );
+            END LOOP;
+
+        print('  generateSchools(' || p_amount || ') generated ' || p_amount || ' schools');
+    END generateSchools;
+    PROCEDURE
+        generateBeheerders(p_amount NUMBER)
+        IS
+        v_firstName beheerders.voornaam%TYPE;
+        v_lastName  beheerders.achternaam%TYPE;
+    BEGIN
+        print('4.2 generateBeheerders(' || p_amount || ')');
+        -- Generate beheerders
+        FOR i IN 1 .. p_amount
+            LOOP
+                add_beheerder(
+                        random_first_name(),
+                        random_last_name(),
+                        random_email(v_firstName, v_lastName),
+                        random_string(random_number(10, 20)),
+                        random_geslacht()
+                    );
+            END LOOP;
+
+
+        print('  generateBeheerders(' || p_amount || ') generated ' || p_amount || ' beheerders');
+    END generateBeheerders;
+    PROCEDURE generateRandomSchoolBeheerders(p_amount NUMBER)
+        IS
+        -- Declare helper variables
+        v_successfully_generated NUMBER := 0;
+        v_already_exists         NUMBER := 0;
+        v_beheerderid            beheerders.beheerderid%TYPE;
+        v_schoolid               scholen.schoolid%TYPE;
+    BEGIN
+        print('4.3 generateRandomSchoolBeheerders(' || p_amount || ')');
+
+        -- While v_successfully_generated < p_amount
+        WHILE v_successfully_generated < p_amount
+            LOOP
+                v_schoolid := random_school();
+                v_beheerderid := random_beheerder();
+
+                v_already_exists := 0;
+
+                -- Check if schoolbeheerder already exists in the the database
+                SELECT COUNT(*)
+                INTO v_already_exists
+                FROM schoolbeheerders
+                WHERE scholen_schoolid = v_schoolid
+                  AND beheerders_beheerderid = v_beheerderid;
+
+                -- If schoolbeheerder doesn't exist in the collection, add it
+                IF NOT v_already_exists
+                THEN
+                    add_schoolbeheerder(
+                            v_schoolid,
+                            v_beheerderid
+                        );
+                    v_successfully_generated := v_successfully_generated + 1;
+                END IF;
+            END LOOP;
+
+        print('  generateRandomSchoolBeheerders(' || p_amount || ') generated ' || p_amount ||
+              ' schoolBeheerders');
+    END generateRandomSchoolBeheerders;
+    PROCEDURE generateClassesForEachSchool(p_amount_of_classes NUMBER)
+        IS
+
+        -- Declare a collection of schools
+        TYPE type_coll_schools
+            IS TABLE OF scholen%ROWTYPE;
+
+        -- Declare a variable of the collection
+        t_schools type_coll_schools;
+
+    BEGIN
+        print('5.2 generateClassesForEachSchool(' || p_amount_of_classes || ')');
+
+        -- Start by getting all schools
+        SELECT * BULK COLLECT INTO t_schools FROM scholen;
+
+        -- Now, loop through each school
+        FOR schoolIndex IN 1 .. t_schools.COUNT
+            LOOP
+                -- Generate classes
+                FOR classIndex IN 1 .. p_amount_of_classes
+                    LOOP
+                        add_klas(
+                                    'Klas ' || classIndex || '-S' || schoolIndex,
+                                    random_number(1, 6),
+                                    t_schools(schoolIndex).schoolid
+                            );
+
+                    END LOOP;
+            END LOOP;
+
+        print('  generateClassesForEachSchool(' || p_amount_of_classes || ') generated ' || SQL%ROWCOUNT ||
+              ' classes');
+
+    END generateClassesForEachSchool;
+    PROCEDURE generatePupilsForEachClass(p_amount_of_pupils NUMBER)
+        IS
+
+        -- Declare a collection of classes
+        TYPE type_coll_classes
+            IS TABLE OF klassen%ROWTYPE;
+
+        -- Declare a variable of the collection
+        t_classes type_coll_classes;
+
+        -- Declare a collection of pupils
+        TYPE type_coll_pupils
+            IS TABLE OF leerlingen%ROWTYPE;
+
+        -- Declare a variable of the collection
+        t_pupils  type_coll_pupils := type_coll_pupils();
+
+    BEGIN
+        print('5.3 generatePupilsForEachClass(' || p_amount_of_pupils || ')');
+
+        -- Start by getting all classes
+        SELECT * BULK COLLECT INTO t_classes FROM klassen;
+
+        -- Now, loop through each school
+        FOR classIndex IN 1 .. t_classes.COUNT
+            LOOP
+                -- Generate classes
+                FOR pupilIndex IN 1 .. p_amount_of_pupils
+                    LOOP
+                        add_leerling(
+                                random_first_name(),
+                                random_last_name(),
+                                random_geslacht(),
+                                random_number(1, 40),
+                                random_number(0, 100),
+                                t_classes(classIndex).klasid
+                            );
+
+                    END LOOP;
+            END LOOP;
+
+        print('  generatePupilsForEachClass(' || p_amount_of_pupils || ') generated ' || SQL%ROWCOUNT ||
+              ' pupils');
+
+    END generatePupilsForEachClass;
+
+    PROCEDURE genereer_veel_op_veel(p_amount_schools NUMBER, p_amount_beheerders NUMBER,
+                                    p_amount_schoolBeheerders NUMBER)
+        IS
+        v_start_generation_time  NUMBER;
+        v_finish_generation_time NUMBER;
+    BEGIN
+        v_start_generation_time := DBMS_UTILITY.get_time();
+        generateSchools(p_amount_schools);
+        generateBeheerders(p_amount_beheerders);
+        generateRandomSchoolBeheerders(p_amount_schoolBeheerders);
+        v_finish_generation_time := DBMS_UTILITY.get_time();
+
+        print('The duration of genereer_veel_op_veel was: ' ||
+              (v_finish_generation_time - v_start_generation_time) ||
+              ' s');
+    END;
+    PROCEDURE generate_2_levels(p_amount_of_classes NUMBER, p_amount_of_pupils NUMBER)
+        IS
+        v_generation_start_time NUMBER;
+        v_generation_end_time   NUMBER;
+        v_amount_of_schools     NUMBER;
+    BEGIN
+        v_generation_start_time := DBMS_UTILITY.get_time();
+
+        -- Get amount of schools
+        SELECT COUNT(schoolid)
+        INTO v_amount_of_schools
+        FROM scholen;
+
+        print('5.1 We already have ' || v_amount_of_schools || ' schools --> Skip schools');
+        generateClassesForEachSchool(p_amount_of_classes);
+        generatePupilsForEachClass(p_amount_of_pupils);
+        v_generation_end_time := DBMS_UTILITY.get_time();
+
+        print('The duration of generate_2_levels was: ' || (v_generation_end_time - v_generation_start_time) ||
+              ' ms');
+    END generate_2_levels;
+
+    -- =======================
+    -- Generating data (bulk)
+    -- =======================
+    PROCEDURE
+        generateSchools_bulk(p_amount IN NUMBER)
         IS
         -- Declare a collection of schools
         TYPE type_coll_school
@@ -558,7 +707,7 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         -- Declare a variable of the collection
         t_scholen type_coll_school := type_coll_school();
     BEGIN
-        print('4.1 generateSchools(' || p_amount || ')');
+        print('4.1 generateSchools_bulk(' || p_amount || ')');
         -- Generate schools
         t_scholen.extend(p_amount);
         FOR i IN 1 .. p_amount
@@ -584,12 +733,10 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
                     t_scholen(i).gemeentes_postcode,
                     t_scholen(i).abonnementen_abonnementid);
 
-        print('  generateSchools(' || p_amount || ') generated ' || SQL%ROWCOUNT || ' schools');
-    END generateSchools;
-
-    -- Generate beheerders
+        print('  generateSchools_bulk(' || p_amount || ') generated ' || SQL%ROWCOUNT || ' schools');
+    END generateSchools_bulk;
     PROCEDURE
-        generateBeheerders(p_amount NUMBER)
+        generateBeheerders_bulk(p_amount NUMBER)
         IS
 
         -- Declare a collection of beheerders
@@ -601,7 +748,7 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         v_firstName  beheerders.voornaam%TYPE;
         v_lastName   beheerders.achternaam%TYPE;
     BEGIN
-        print('4.2 generateBeheerders(' || p_amount || ')');
+        print('4.2 generateBeheerders_bulk(' || p_amount || ')');
         -- Generate beheerders
         t_beheerders.extend(p_amount);
         FOR i IN 1 .. p_amount
@@ -629,11 +776,9 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
                     t_beheerders(i).wachtwoord,
                     t_beheerders(i).geslacht);
 
-        print('  generateBeheerders(' || p_amount || ') generated ' || SQL%ROWCOUNT || ' beheerders');
-    END generateBeheerders;
-
-    -- Generate schoolbeheerders
-    PROCEDURE generateRandomSchoolBeheerders(p_amount NUMBER)
+        print('  generateBeheerders_bulk(' || p_amount || ') generated ' || SQL%ROWCOUNT || ' beheerders');
+    END generateBeheerders_bulk;
+    PROCEDURE generateRandomSchoolBeheerders_bulk(p_amount NUMBER)
         IS
         -- Declare a collection of schoolbeheerders
         TYPE type_coll_schoolbeheerder
@@ -648,7 +793,7 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         v_beheerderid            beheerders.beheerderid%TYPE;
         v_schoolid               scholen.schoolid%TYPE;
     BEGIN
-        print('4.3 generateRandomSchoolBeheerders(' || p_amount || ')');
+        print('4.3 generateRandomSchoolBeheerders_bulk(' || p_amount || ')');
 
         -- Generate schoolbeheerders
         t_schoolbeheerders.extend(p_amount);
@@ -689,27 +834,10 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
             INSERT INTO schoolbeheerders (SCHOLEN_SCHOOLID, BEHEERDERS_BEHEERDERID)
             VALUES (t_schoolbeheerders(i).scholen_schoolid, t_schoolbeheerders(i).beheerders_beheerderid);
 
-        print('  generateRandomSchoolBeheerders(' || p_amount || ') generated ' || SQL%ROWCOUNT ||
+        print('  generateRandomSchoolBeheerders_bulk(' || p_amount || ') generated ' || SQL%ROWCOUNT ||
               ' schoolBeheerders');
-    END generateRandomSchoolBeheerders;
-
-    PROCEDURE genereer_veel_op_veel(p_amount_schools NUMBER, p_amount_beheerders NUMBER,
-                                    p_amount_schoolBeheerders NUMBER)
-        IS
-        v_start_generation_time  NUMBER;
-        v_finish_generation_time NUMBER;
-    BEGIN
-        v_start_generation_time := DBMS_UTILITY.get_time();
-        generateSchools(p_amount_schools);
-        generateBeheerders(p_amount_beheerders);
-        generateRandomSchoolBeheerders(p_amount_schoolBeheerders);
-        v_finish_generation_time := DBMS_UTILITY.get_time();
-
-        print('The duration of genereer_veel_op_veel was: ' || (v_finish_generation_time - v_start_generation_time) ||
-              ' s');
-    END;
-
-    PROCEDURE generateClassesForEachSchool(p_amount_of_classes NUMBER)
+    END generateRandomSchoolBeheerders_bulk;
+    PROCEDURE generateClassesForEachSchool_bulk(p_amount_of_classes NUMBER)
         IS
 
         -- Declare a collection of schools
@@ -727,7 +855,7 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         t_classes type_coll_classes := type_coll_classes();
 
     BEGIN
-        print('5.2 generateClassesForEachSchool(' || p_amount_of_classes || ')');
+        print('5.2 generateClassesForEachSchool_bulk(' || p_amount_of_classes || ')');
 
         -- Start by getting all schools
         SELECT * BULK COLLECT INTO t_schools FROM scholen;
@@ -752,12 +880,11 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
                     t_classes(i).naam,
                     t_classes(i).leerjaar);
 
-        print('  generateClassesForEachSchool(' || p_amount_of_classes || ') generated ' || SQL%ROWCOUNT ||
+        print('  generateClassesForEachSchool_bulk(' || p_amount_of_classes || ') generated ' || SQL%ROWCOUNT ||
               ' classes');
 
-    END generateClassesForEachSchool;
-
-    PROCEDURE generatePupilsForEachClass(p_amount_of_pupils NUMBER)
+    END generateClassesForEachSchool_bulk;
+    PROCEDURE generatePupilsForEachClass_bulk(p_amount_of_pupils NUMBER)
         IS
 
         -- Declare a collection of classes
@@ -775,7 +902,7 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         t_pupils  type_coll_pupils := type_coll_pupils();
 
     BEGIN
-        print('5.3 generatePupilsForEachClass(' || p_amount_of_pupils || ')');
+        print('5.3 generatePupilsForEachClass_bulk(' || p_amount_of_pupils || ')');
 
         -- Start by getting all classes
         SELECT * BULK COLLECT INTO t_classes FROM klassen;
@@ -806,12 +933,28 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
                     t_pupils(i).klasnummer,
                     t_pupils(i).score);
 
-        print('  generatePupilsForEachClass(' || p_amount_of_pupils || ') generated ' || SQL%ROWCOUNT ||
+        print('  generatePupilsForEachClass_bulk(' || p_amount_of_pupils || ') generated ' || SQL%ROWCOUNT ||
               ' pupils');
 
-    END generatePupilsForEachClass;
+    END generatePupilsForEachClass_bulk;
 
-    PROCEDURE generate_2_levels(p_amount_of_classes NUMBER, p_amount_of_pupils NUMBER)
+    PROCEDURE genereer_veel_op_veel_bulk(p_amount_schools NUMBER, p_amount_beheerders NUMBER,
+                                         p_amount_schoolBeheerders NUMBER)
+        IS
+        v_start_generation_time  NUMBER;
+        v_finish_generation_time NUMBER;
+    BEGIN
+        v_start_generation_time := DBMS_UTILITY.get_time();
+        generateSchools_bulk(p_amount_schools);
+        generateBeheerders_bulk(p_amount_beheerders);
+        generateRandomSchoolBeheerders_bulk(p_amount_schoolBeheerders);
+        v_finish_generation_time := DBMS_UTILITY.get_time();
+
+        print('The duration of genereer_veel_op_veel_bulk was: ' ||
+              (v_finish_generation_time - v_start_generation_time) ||
+              ' s');
+    END;
+    PROCEDURE generate_2_levels_bulk(p_amount_of_classes NUMBER, p_amount_of_pupils NUMBER)
         IS
         v_generation_start_time NUMBER;
         v_generation_end_time   NUMBER;
@@ -825,14 +968,17 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         FROM scholen;
 
         print('5.1 We already have ' || v_amount_of_schools || ' schools --> Skip schools');
-        generateClassesForEachSchool(p_amount_of_classes);
-        generatePupilsForEachClass(p_amount_of_pupils);
+        generateClassesForEachSchool_bulk(p_amount_of_classes);
+        generatePupilsForEachClass_bulk(p_amount_of_pupils);
         v_generation_end_time := DBMS_UTILITY.get_time();
 
-        print('The duration of generate_2_levels was: ' || (v_generation_end_time - v_generation_start_time) ||
+        print('The duration of generate_2_levels_bulk was: ' || (v_generation_end_time - v_generation_start_time) ||
               ' ms');
-    END generate_2_levels;
+    END generate_2_levels_bulk;
 
+    -- =======================
+    -- Milestone 5 bewijs
+    -- =======================
     PROCEDURE bewijs_milestone_5
         IS
     BEGIN
@@ -854,12 +1000,45 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         genereer_veel_op_veel(20, 20, 50);
 
         -- 5 - 2 levels generation
-        print('5 - Starting 2-levels generation: generate_2_levels(40,50)');
-        generate_2_levels(40, 50);
+        print('5 - Starting 2-levels generation: generate_2_levels(100,200)');
+        generate_2_levels(100, 200);
 
         COMMIT;
     END bewijs_milestone_5;
 
+    -- ===========================
+    -- Data management procedures
+    -- ===========================
+    PROCEDURE empty_tables IS
+    BEGIN
+        EXECUTE IMMEDIATE 'PURGE RECYCLEBIN';
+        -- Clear data
+        EXECUTE IMMEDIATE 'truncate TABLE leerlingen';
+        EXECUTE IMMEDIATE 'truncate TABLE klassen';
+        EXECUTE IMMEDIATE 'truncate TABLE schoolbeheerders';
+        EXECUTE IMMEDIATE 'truncate TABLE beheerders';
+        EXECUTE IMMEDIATE 'truncate TABLE scholen';
+        EXECUTE IMMEDIATE 'truncate TABLE abonnementen';
+        EXECUTE IMMEDIATE 'truncate TABLE gemeentes';
+        EXECUTE IMMEDIATE 'truncate TABLE landen';
+
+        -- Reset identity columns
+        EXECUTE IMMEDIATE 'ALTER TABLE beheerders
+            MODIFY beheerderid GENERATED ALWAYS as identity (start with 1)';
+        EXECUTE IMMEDIATE 'ALTER TABLE landen
+            MODIFY landid GENERATED ALWAYS as identity (start with 1)';
+        EXECUTE IMMEDIATE 'ALTER TABLE klassen
+            MODIFY klasid GENERATED ALWAYS as identity (start with 1)';
+        EXECUTE IMMEDIATE 'ALTER TABLE leerlingen
+            MODIFY leerlingid GENERATED ALWAYS as identity (start with 1)';
+        EXECUTE IMMEDIATE 'ALTER TABLE scholen
+            MODIFY schoolid GENERATED ALWAYS as identity (start with 1)';
+        EXECUTE IMMEDIATE 'ALTER TABLE abonnementen
+            MODIFY abonnementid GENERATED ALWAYS as identity (start with 1)';
+
+        print('De tabellen zijn leeggemaakt');
+
+    END empty_tables;
     PROCEDURE calculate_pupils_of_gender_in_school(p_school_name scholen.naam%TYPE, p_gender leerlingen.geslacht%TYPE)
         IS
         -- School to calculate for
@@ -907,7 +1086,6 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         print('Er zijn ' || v_n_gender || ' mensen met het gender ' || p_gender || ' op school ' || v_school);
 
     END calculate_pupils_of_gender_in_school;
-
     PROCEDURE printreport_2_levels(p_n_schools NUMBER, p_n_classes NUMBER, p_n_pupils NUMBER)
         IS
         -- Cursor for schools
@@ -949,8 +1127,8 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
     BEGIN
         -- Check if the parms are negative
         IF p_n_schools < 0 OR p_n_classes < 0 OR p_n_pupils < 0
-            THEN
-                RAISE exc_negative_param;
+        THEN
+            RAISE exc_negative_param;
         END IF;
 
 
@@ -1045,10 +1223,11 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
 
         print('|----------------------------------------------------------------------------------|');
 
-        EXCEPTION
-            WHEN exc_negative_param
-                THEN
-                    print('Please only use positive numbers for the parameters.');
+    EXCEPTION
+        WHEN exc_negative_param
+            THEN
+                print('Please only use positive numbers for the parameters.');
     END printreport_2_levels;
+
 END pkg_scholen;
 
