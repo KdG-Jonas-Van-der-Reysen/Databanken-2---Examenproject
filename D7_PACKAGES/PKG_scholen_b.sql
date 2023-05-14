@@ -1,6 +1,6 @@
 CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
     -- ===========================
-    -- Utility procedures
+    -- Utility methods
     -- ===========================
     PROCEDURE print(p_string IN VARCHAR2)
         IS
@@ -10,6 +10,14 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         -- Print timestamp
         DBMS_OUTPUT.PUT_LINE(v_timestamp || p_string);
     END print;
+    FUNCTION timestamp_diff(a timestamp, b timestamp)
+        RETURN NUMBER IS
+    BEGIN
+        RETURN EXTRACT(day from (a - b)) * 24 * 60 * 60 +
+               EXTRACT(hour from (a - b)) * 60 * 60 +
+               EXTRACT(minute from (a - b)) * 60 +
+               EXTRACT(second from (a - b));
+    END;
 
     -- ===========================
     -- Lookup functions
@@ -298,7 +306,6 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         RETURN v_beheerderid;
     END random_beheerder;
 
-
     -- =======================
     -- Adding data procedures
     -- =======================
@@ -437,7 +444,7 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
 
     END add_klas;
     PROCEDURE
-        add_klas(
+        add_klas_string(
         p_school IN VARCHAR2,
         p_naam IN VARCHAR2,
         p_leerjaar IN NUMBER
@@ -449,7 +456,7 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
 
         add_klas(v_schoolid, p_naam, p_leerjaar);
 
-    END add_klas;
+    END add_klas_string;
 
     PROCEDURE
         add_leerling(
@@ -562,7 +569,7 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
                   AND beheerders_beheerderid = v_beheerderid;
 
                 -- If schoolbeheerder doesn't exist in the collection, add it
-                IF NOT v_already_exists
+                IF v_already_exists = 0
                 THEN
                     add_schoolbeheerder(
                             v_schoolid,
@@ -583,7 +590,8 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
             IS TABLE OF scholen%ROWTYPE;
 
         -- Declare a variable of the collection
-        t_schools type_coll_schools;
+        t_schools           type_coll_schools;
+        v_generated_classes NUMBER := 0;
 
     BEGIN
         print('5.2 generateClassesForEachSchool(' || p_amount_of_classes || ')');
@@ -598,15 +606,16 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
                 FOR classIndex IN 1 .. p_amount_of_classes
                     LOOP
                         add_klas(
-                                    'Klas ' || classIndex || '-S' || schoolIndex,
-                                    random_number(1, 6),
-                                    t_schools(schoolIndex).schoolid
+                                t_schools(schoolIndex).schoolid,
+                                'Klas ' || classIndex || '-S' || schoolIndex,
+                                random_number(1, 6)
                             );
 
+                        v_generated_classes := v_generated_classes + SQL%ROWCOUNT;
                     END LOOP;
             END LOOP;
 
-        print('  generateClassesForEachSchool(' || p_amount_of_classes || ') generated ' || SQL%ROWCOUNT ||
+        print('  generateClassesForEachSchool(' || p_amount_of_classes || ') generated ' || v_generated_classes ||
               ' classes');
 
     END generateClassesForEachSchool;
@@ -618,14 +627,8 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
             IS TABLE OF klassen%ROWTYPE;
 
         -- Declare a variable of the collection
-        t_classes type_coll_classes;
-
-        -- Declare a collection of pupils
-        TYPE type_coll_pupils
-            IS TABLE OF leerlingen%ROWTYPE;
-
-        -- Declare a variable of the collection
-        t_pupils  type_coll_pupils := type_coll_pupils();
+        t_classes          type_coll_classes;
+        v_generated_pupils NUMBER := 0;
 
     BEGIN
         print('5.3 generatePupilsForEachClass(' || p_amount_of_pupils || ')');
@@ -640,22 +643,22 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
                 FOR pupilIndex IN 1 .. p_amount_of_pupils
                     LOOP
                         add_leerling(
+                                t_classes(classIndex).klasid,
                                 random_first_name(),
                                 random_last_name(),
                                 random_geslacht(),
                                 random_number(1, 40),
-                                random_number(0, 100),
-                                t_classes(classIndex).klasid
+                                random_number(0, 100)
                             );
+                        v_generated_pupils := v_generated_pupils + SQL%ROWCOUNT;
 
                     END LOOP;
             END LOOP;
 
-        print('  generatePupilsForEachClass(' || p_amount_of_pupils || ') generated ' || SQL%ROWCOUNT ||
+        print('  generatePupilsForEachClass(' || p_amount_of_pupils || ') generated ' || v_generated_pupils ||
               ' pupils');
 
     END generatePupilsForEachClass;
-
     PROCEDURE genereer_veel_op_veel(p_amount_schools NUMBER, p_amount_beheerders NUMBER,
                                     p_amount_schoolBeheerders NUMBER)
         IS
@@ -669,8 +672,7 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         v_finish_generation_time := DBMS_UTILITY.get_time();
 
         print('The duration of genereer_veel_op_veel was: ' ||
-              (v_finish_generation_time - v_start_generation_time) ||
-              ' s');
+              (v_finish_generation_time - v_start_generation_time) / 100 || ' s');
     END;
     PROCEDURE generate_2_levels(p_amount_of_classes NUMBER, p_amount_of_pupils NUMBER)
         IS
@@ -690,8 +692,8 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         generatePupilsForEachClass(p_amount_of_pupils);
         v_generation_end_time := DBMS_UTILITY.get_time();
 
-        print('The duration of generate_2_levels was: ' || (v_generation_end_time - v_generation_start_time) ||
-              ' ms');
+        print('The duration of generate_2_levels was: ' || (v_generation_end_time - v_generation_start_time) / 100 ||
+              ' s');
     END generate_2_levels;
 
     -- =======================
@@ -707,7 +709,7 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         -- Declare a variable of the collection
         t_scholen type_coll_school := type_coll_school();
     BEGIN
-        print('4.1 generateSchools_bulk(' || p_amount || ')');
+        print('1.1 generateSchools_bulk(' || p_amount || ')');
         -- Generate schools
         t_scholen.extend(p_amount);
         FOR i IN 1 .. p_amount
@@ -748,7 +750,7 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         v_firstName  beheerders.voornaam%TYPE;
         v_lastName   beheerders.achternaam%TYPE;
     BEGIN
-        print('4.2 generateBeheerders_bulk(' || p_amount || ')');
+        print('1.2 generateBeheerders_bulk(' || p_amount || ')');
         -- Generate beheerders
         t_beheerders.extend(p_amount);
         FOR i IN 1 .. p_amount
@@ -793,7 +795,7 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         v_beheerderid            beheerders.beheerderid%TYPE;
         v_schoolid               scholen.schoolid%TYPE;
     BEGIN
-        print('4.3 generateRandomSchoolBeheerders_bulk(' || p_amount || ')');
+        print('1.3 generateRandomSchoolBeheerders_bulk(' || p_amount || ')');
 
         -- Generate schoolbeheerders
         t_schoolbeheerders.extend(p_amount);
@@ -855,7 +857,7 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         t_classes type_coll_classes := type_coll_classes();
 
     BEGIN
-        print('5.2 generateClassesForEachSchool_bulk(' || p_amount_of_classes || ')');
+        print('2.2 generateClassesForEachSchool_bulk(' || p_amount_of_classes || ')');
 
         -- Start by getting all schools
         SELECT * BULK COLLECT INTO t_schools FROM scholen;
@@ -902,7 +904,7 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         t_pupils  type_coll_pupils := type_coll_pupils();
 
     BEGIN
-        print('5.3 generatePupilsForEachClass_bulk(' || p_amount_of_pupils || ')');
+        print('2.3 generatePupilsForEachClass_bulk(' || p_amount_of_pupils || ')');
 
         -- Start by getting all classes
         SELECT * BULK COLLECT INTO t_classes FROM klassen;
@@ -951,8 +953,7 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         v_finish_generation_time := DBMS_UTILITY.get_time();
 
         print('The duration of genereer_veel_op_veel_bulk was: ' ||
-              (v_finish_generation_time - v_start_generation_time) ||
-              ' s');
+              (v_finish_generation_time - v_start_generation_time) / 100 || ' s');
     END;
     PROCEDURE generate_2_levels_bulk(p_amount_of_classes NUMBER, p_amount_of_pupils NUMBER)
         IS
@@ -967,18 +968,35 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         INTO v_amount_of_schools
         FROM scholen;
 
-        print('5.1 We already have ' || v_amount_of_schools || ' schools --> Skip schools');
+        print('2.1 We already have ' || v_amount_of_schools || ' schools --> Skip schools');
         generateClassesForEachSchool_bulk(p_amount_of_classes);
         generatePupilsForEachClass_bulk(p_amount_of_pupils);
         v_generation_end_time := DBMS_UTILITY.get_time();
 
-        print('The duration of generate_2_levels_bulk was: ' || (v_generation_end_time - v_generation_start_time) ||
-              ' ms');
+        print('The duration of generate_2_levels_bulk was: ' ||
+              (v_generation_end_time - v_generation_start_time) / 100 || ' s');
     END generate_2_levels_bulk;
 
     -- =======================
-    -- Milestone 5 bewijs
+    -- Milestone 5 & 7 bewijs
     -- =======================
+    PROCEDURE bulk_import_prepare
+        IS
+    BEGIN
+        -- Landen
+        add_land('be', 'België');
+
+        -- Abonnementen
+        add_abonnement('Standaard', 10.00, 40);
+        add_abonnement('Premium', 20.00, 24);
+        add_abonnement('Platinum', 50.00, 8);
+
+        -- Gemeentes
+        add_gemeente(2990, 'Wuustwezel', 'België');
+        add_gemeente(2960, 'Brecht', 'België');
+        add_gemeente(2920, 'Kalmthout', 'België');
+        add_gemeente(2910, 'Essen', 'België');
+    END;
     PROCEDURE bewijs_milestone_5
         IS
     BEGIN
@@ -1005,6 +1023,50 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
 
         COMMIT;
     END bewijs_milestone_5;
+    PROCEDURE bewijs_milestone_7
+        IS
+    BEGIN
+        -- 1 - Many to many generation
+        print('1 - Starting Many-to-many generation: genereer_veel_op_veel_bulk(20,20,50)');
+        genereer_veel_op_veel_bulk(20, 20, 50);
+
+        -- 2 - 2 levels generation
+        print('2 - Starting 2-levels generation: generate_2_levels_bulk(100,200)');
+        generate_2_levels_bulk(100, 200);
+
+        COMMIT;
+    END bewijs_milestone_7;
+    PROCEDURE Comparison_Single_Bulk_M7(p_amount_schools NUMBER, p_amount_classes NUMBER, p_amount_pupils NUMBER)
+        IS
+        v_single_start TIMESTAMP;
+        v_single_end   TIMESTAMP;
+        v_bulk_start   TIMESTAMP;
+        v_bulk_end     TIMESTAMP;
+    BEGIN
+        -- Single
+        empty_tables();
+        bulk_import_prepare();
+
+        v_single_start := SYSTIMESTAMP;
+        generateSchools(p_amount_schools);
+        generate_2_levels(p_amount_classes, p_amount_pupils);
+        v_single_end := SYSTIMESTAMP;
+
+        -- Bulk
+        empty_tables();
+        bulk_import_prepare();
+        v_bulk_start := SYSTIMESTAMP;
+        generateSchools_bulk(p_amount_schools);
+        generate_2_levels_bulk(p_amount_classes, p_amount_pupils);
+        v_bulk_end := SYSTIMESTAMP;
+
+        print('=========');
+        print('Executed Comparison_Single_Bulk_M7(' || p_amount_schools || ', ' || p_amount_classes ||
+              ', ' || p_amount_pupils || ')');
+
+        print('     Single: ' || ROUND(timestamp_diff(v_single_end, v_single_start), 2) || 's');
+        print('     Bulk: ' || ROUND(timestamp_diff(v_bulk_end, v_bulk_start), 2) || 's');
+    END Comparison_Single_Bulk_M7;
 
     -- ===========================
     -- Data management procedures
@@ -1039,13 +1101,15 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         print('De tabellen zijn leeggemaakt');
 
     END empty_tables;
-    PROCEDURE calculate_pupils_of_gender_in_school(p_school_name scholen.naam%TYPE, p_gender leerlingen.geslacht%TYPE)
+    PROCEDURE
+        calculate_pupils_of_gender_in_school(p_school_name scholen.naam%TYPE, p_gender leerlingen.geslacht%TYPE)
         IS
         -- School to calculate for
         v_school         scholen.schoolid%TYPE;
 
         -- School's classes
-        TYPE type_coll_classes
+        TYPE
+            type_coll_classes
             IS TABLE OF klassen.klasid%TYPE;
 
         -- Declare a variable of the collection
@@ -1086,10 +1150,12 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
         print('Er zijn ' || v_n_gender || ' mensen met het gender ' || p_gender || ' op school ' || v_school);
 
     END calculate_pupils_of_gender_in_school;
-    PROCEDURE printreport_2_levels(p_n_schools NUMBER, p_n_classes NUMBER, p_n_pupils NUMBER)
+    PROCEDURE
+        printreport_2_levels(p_n_schools NUMBER, p_n_classes NUMBER, p_n_pupils NUMBER)
         IS
         -- Cursor for schools
-        CURSOR cur_school IS
+        CURSOR
+            cur_school IS
             SELECT s.schoolid,
                    s.naam,
                    s.straat || ' ' || s.huisnummer || ', ' || g.postcode || ' ' || g.gemeente || ', ' ||
@@ -1104,7 +1170,8 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
             ORDER BY s.schoolid;
 
         -- Cursor for classes
-        CURSOR cur_class (p_schoolid NUMBER) IS
+        CURSOR
+            cur_class(p_schoolid NUMBER) IS
             SELECT k.klasid, k.naam, k.leerjaar, ROUND(AVG(l.score)) || '%' as "Average score"
             FROM klassen k
                      LEFT JOIN leerlingen l ON k.klasid = l.klassen_klasid
@@ -1112,7 +1179,8 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
             GROUP BY k.klasid, k.naam, k.leerjaar;
 
         -- Cursor for pupils
-        CURSOR cur_pupil (p_classid NUMBER) IS
+        CURSOR
+            cur_pupil(p_classid NUMBER) IS
             SELECT leerlingid, voornaam || ' ' || achternaam as "NAAM", score || '%' as "SCORE"
             FROM leerlingen
             WHERE klassen_klasid = p_classid;

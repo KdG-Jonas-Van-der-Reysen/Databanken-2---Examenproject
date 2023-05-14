@@ -1,9 +1,8 @@
 CREATE OR REPLACE PACKAGE pkg_scholen
 AS
-    -- Empty tables
-
-
+    -- =======================
     -- Single row inserts
+    -- =======================
     PROCEDURE add_land(
         p_landCode IN VARCHAR2, p_landNaam IN VARCHAR2
     );
@@ -30,7 +29,7 @@ AS
         p_beheerder_voornaam IN VARCHAR2,
         p_beheerder_achernaam IN VARCHAR2
     );
-    PROCEDURE add_klas(
+    PROCEDURE add_klas_string(
         p_school IN VARCHAR2,
         p_naam IN VARCHAR2,
         p_leerjaar IN NUMBER
@@ -77,9 +76,11 @@ AS
     );
 
     -- =======================
-    -- Milestone 5 bewijs
+    -- Milestone 5 & 7 bewijs
     -- =======================
     PROCEDURE bewijs_milestone_5;
+    PROCEDURE bewijs_milestone_7;
+    PROCEDURE Comparison_Single_Bulk_M7(p_amount_schools NUMBER, p_amount_classes NUMBER, p_amount_pupils NUMBER);
 
     -- ===========================
     -- Data management procedures
