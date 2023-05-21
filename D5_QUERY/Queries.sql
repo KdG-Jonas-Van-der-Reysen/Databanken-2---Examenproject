@@ -52,3 +52,78 @@ SELECT s.NAAM       as schoolnaam,
 FROM SCHOLEN S
         JOIN GEMEENTES G on s.GEMEENTES_POSTCODE = G.POSTCODE
         JOIN LANDEN L on g.LANDEN_LANDID = l.LANDID;
+
+
+
+
+
+
+
+
+SELECT s.schoolid, s.naam, s.straat || ' ' || s.huisnummer || ', ' || g.postcode || ' ' || g.gemeente ||', ' || landen.landnaam as adres, ROUND(AVG(l.score))|| '%' as "Average score"
+FROM scholen s
+         JOIN gemeentes g ON s.gemeentes_postcode = g.postcode
+         JOIN landen ON g.landen_landid = landen.landid
+         JOIN klassen k ON s.schoolid = k.scholen_schoolid
+         JOIN leerlingen l ON k.klasid = l.klassen_klasid
+GROUP BY s.schoolid, s.naam, s.straat, s.huisnummer, g.postcode, g.gemeente, landen.landnaam
+ORDER BY s.schoolid;
+
+SELECT max(length(straat))
+FROM scholen;
+
+
+SELECT k.klasid, k.naam, k.leerjaar, ROUND(AVG(l.score)) || '%' as "Average score"
+FROM klassen k
+LEFT JOIN leerlingen l ON k.klasid = l.klassen_klasid
+WHERE k.scholen_schoolid = 1
+GROUP BY k.klasid, k.naam, k.leerjaar;
+
+
+SELECT leerlingid, voornaam, achternaam, score || '%' as "SCORE"
+FROM leerlingen;
+
+Select * from scholen;
+
+select * from klassen;
+select * from leerlingen;
+
+select voornaam, achternaam FROM LEERLINGEN
+FETCH FIRST 40 rows ONLY;
+
+
+SELECT s.schoolid,
+       s.naam,
+       s.straat || ' ' || s.huisnummer || ', ' || g.postcode || ' ' || g.gemeente || ', ' ||
+       landen.landnaam            as adres,
+       ROUND(AVG(l.score)) || '%' as "Average score"
+FROM scholen s
+         JOIN gemeentes g ON s.gemeentes_postcode = g.postcode
+         JOIN landen ON g.landen_landid = landen.landid
+         LEFT JOIN klassen k ON s.schoolid = k.scholen_schoolid
+         LEFT JOIN leerlingen l ON k.klasid = l.klassen_klasid
+GROUP BY s.schoolid, s.naam, s.straat, s.huisnummer, g.postcode, g.gemeente, landen.landnaam
+ORDER BY s.schoolid;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
