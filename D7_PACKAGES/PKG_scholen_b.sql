@@ -500,6 +500,78 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
     END add_abonnement;
 
     -- =======================
+    -- Manual fill
+    -- =======================
+    PROCEDURE basic_seed
+        IS
+    BEGIN
+        -- Landen
+        add_land('be', 'België');
+
+        -- Abonnementen
+        add_abonnement('Standaard', 10.00, 40);
+        add_abonnement('Premium', 20.00, 24);
+        add_abonnement('Platinum', 50.00, 8);
+
+        -- Gemeentes
+        add_gemeente(2990, 'Wuustwezel', 'België');
+        add_gemeente(2960, 'Brecht', 'België');
+        add_gemeente(2920, 'Kalmthout', 'België');
+        add_gemeente(2910, 'Essen', 'België');
+    END;
+
+    PROCEDURE manual_fill
+        IS
+    BEGIN
+        add_land('be', 'België');
+        add_abonnement('Standaard', 10.00, 40);
+        add_abonnement('Premium', 20.00, 24);
+        add_abonnement('Platinum', 50.00, 8);
+
+        add_gemeente(2990, 'Wuustwezel', 'België');
+        add_gemeente(2960, 'Brecht', 'België');
+        add_gemeente(2920, 'Kalmthout', 'België');
+        add_gemeente(2910, 'Essen', 'België');
+
+        add_school_strings('GBS t Blokje', 'Kerkblokstraat', 14, 'Wuustwezel', 'Standaard');
+        add_school_strings('Basisschool int groen', 'Leopoldstraat', 15, 'Brecht', 'Premium');
+        add_school_strings('GBS Kadrie', 'Driehoekstraat', 41, 'Kalmthout', 'Standaard');
+        add_school_strings('GBS Wigo', 'De Vondert', 1, 'Essen', 'Platinum');
+        add_school_strings('GBS De Klimboom', 'Klimboomstraat', 1, 'Wuustwezel', 'Standaard');
+
+        add_beheerder('Jef', 'Janssens', 'jef.janssens@hotmail.com', 'jef', 'M');
+        add_beheerder('Laura', 'Peters', 'laura.peters@gmail.com', 'laura', 'V');
+        add_beheerder('Peter', 'Vermeulen', 'peter.vermeulen@yahoo.com', 'peter', 'X');
+        add_beheerder('Marie', 'De Vries', 'marie.devries@outlook.com', 'marie', 'V');
+        add_beheerder('Jan', 'Van der Meer', 'jan.vandermeer@gmail.com', 'jan', 'M');
+
+        add_schoolbeheerder('GBS t Blokje', 'Jef', 'Janssens');
+        add_schoolbeheerder('GBS Kadrie', 'Peter', 'Vermeulen');
+        add_schoolbeheerder('GBS Wigo', 'Jef', 'Janssens');
+        add_schoolbeheerder('GBS Wigo', 'Peter', 'Vermeulen');
+        add_schoolbeheerder('GBS De Klimboom', 'Laura', 'Peters');
+
+        add_klas_string('GBS t Blokje', '1A', 1);
+        add_klas_string('GBS t Blokje', '1B', 1);
+        add_klas_string('GBS t Blokje', '2A', 2);
+        add_klas_string('GBS t Blokje', '2B', 2);
+        add_klas_string('Basisschool int groen', '1A', 1);
+        add_klas_string('Basisschool int groen', '1B', 1);
+        add_klas_string('Basisschool int groen', '2A', 2);
+        add_klas_string('Basisschool int groen', '2B', 2);
+
+        add_leerling('1A', 'GBS t Blokje', 'Jef', 'Janssens', 'M', 1, 39);
+        add_leerling('1B', 'GBS t Blokje', 'Sofie', 'Peeters', 'V', 2, 49);
+        add_leerling('2B', 'GBS t Blokje', 'Tom', 'Vermeulen', 'M', 3, 12);
+        add_leerling('1A', 'GBS t Blokje', 'Lisa', 'De Smet', 'V', 4, 94);
+        add_leerling('1A', 'Basisschool int groen', 'Bart', 'Van Damme', 'M', 5, 28);
+        add_leerling('1A', 'Basisschool int groen', 'Bert', 'Van Sesamstraat', 'M', 6, 73);
+        add_leerling('2A', 'Basisschool int groen', 'Ernie', 'Van de Banaan', 'M', 7, 16);
+
+        COMMIT;
+    END;
+
+    -- =======================
     -- Generating data
     -- =======================
     PROCEDURE
@@ -1038,34 +1110,47 @@ CREATE OR REPLACE PACKAGE BODY pkg_scholen AS
     END bewijs_milestone_7;
     PROCEDURE Comparison_Single_Bulk_M7(p_amount_schools NUMBER, p_amount_classes NUMBER, p_amount_pupils NUMBER)
         IS
-        v_single_start TIMESTAMP;
-        v_single_end   TIMESTAMP;
-        v_bulk_start   TIMESTAMP;
-        v_bulk_end     TIMESTAMP;
+        v_single_start         TIMESTAMP;
+        v_single_end           TIMESTAMP;
+        v_bulk_start           TIMESTAMP;
+        v_bulk_end             TIMESTAMP;
+        v_single_start_precise NUMBER;
+        v_single_end_precise   NUMBER;
+        v_bulk_start_precise   NUMBER;
+        v_bulk_end_precise     NUMBER;
     BEGIN
         -- Single
         empty_tables();
         bulk_import_prepare();
 
         v_single_start := SYSTIMESTAMP;
+        v_single_start_precise := DBMS_UTILITY.get_time();
         generateSchools(p_amount_schools);
         generate_2_levels(p_amount_classes, p_amount_pupils);
         v_single_end := SYSTIMESTAMP;
+        v_single_end_precise := DBMS_UTILITY.get_time();
 
         -- Bulk
         empty_tables();
         bulk_import_prepare();
         v_bulk_start := SYSTIMESTAMP;
+        v_bulk_start_precise := DBMS_UTILITY.get_time();
         generateSchools_bulk(p_amount_schools);
         generate_2_levels_bulk(p_amount_classes, p_amount_pupils);
         v_bulk_end := SYSTIMESTAMP;
+        v_bulk_end_precise := DBMS_UTILITY.get_time();
 
         print('=========');
         print('Executed Comparison_Single_Bulk_M7(' || p_amount_schools || ', ' || p_amount_classes ||
               ', ' || p_amount_pupils || ')');
 
+        -- Print in seconds
         print('     Single: ' || ROUND(timestamp_diff(v_single_end, v_single_start), 2) || 's');
         print('     Bulk: ' || ROUND(timestamp_diff(v_bulk_end, v_bulk_start), 2) || 's');
+
+        -- Print in miliseconds
+        --print('     Single: ' || (v_single_end_precise - v_single_start_precise) || 'ms');
+        --print('     Bulk: ' || (v_bulk_end_precise - v_bulk_start_precise) || 'ms');
     END Comparison_Single_Bulk_M7;
 
     -- ===========================
