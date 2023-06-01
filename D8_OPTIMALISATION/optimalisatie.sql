@@ -61,3 +61,11 @@ GROUP BY segment_name, segment_type;
 -- Bekijk partities
 SELECT table_name, partition_name, high_value
 FROM user_tab_partitions;
+
+-- Bekijk partities met grootte in MB
+-- Grootte van tabel leerlingen bekijken
+SELECT segment_name, segment_type, bytes / 1024 / 1024 mb
+FROM user_segments
+WHERE segment_name = 'LEERLINGEN';
+
+SELECT COUNT(*) FROM leerlingen;

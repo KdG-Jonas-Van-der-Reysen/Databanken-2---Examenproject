@@ -7,34 +7,6 @@ AS
     PROCEDURE manual_fill;
 
     -- =======================
-    -- Generating data (bulk)
-    -- =======================
-    PROCEDURE genereer_veel_op_veel(
-        p_amount_schools NUMBER,
-        p_amount_beheerders NUMBER,
-        p_amount_schoolBeheerders NUMBER
-    );
-    PROCEDURE generate_2_levels(
-        p_amount_of_classes NUMBER,
-        p_amount_of_pupils NUMBER
-    );
-
-
-    -- =======================
-    -- Generating data
-    -- =======================
-
-    PROCEDURE genereer_veel_op_veel_bulk(
-        p_amount_schools NUMBER,
-        p_amount_beheerders NUMBER,
-        p_amount_schoolBeheerders NUMBER
-    );
-    PROCEDURE generate_2_levels_bulk(
-        p_amount_of_classes NUMBER,
-        p_amount_of_pupils NUMBER
-    );
-
-    -- =======================
     -- Milestone 5 & 7 bewijs
     -- =======================
     PROCEDURE bewijs_milestone_5;
